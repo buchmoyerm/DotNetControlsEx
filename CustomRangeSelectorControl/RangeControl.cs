@@ -34,6 +34,9 @@ namespace CustomRangeSelectorControl
 		private string							strXMLFileName;					// XML File Name that is used for picking up the Label Values
 		private string							strRangeString;					// The String that is displayed at the bottom of the control.  
 		private string							strRange;						// An alternate to the XML File Name where the Range Label values are stored
+        private int                             intRangeMax;                    // Max range value
+        private int                             intRangeMin;                    // Min range value
+        private double                          doubleRangeStep;                   // Range step unit
 		private Font							fntLabelFont;					// Font of the Label
 		private FontStyle						fntLabelFontStyle;				// Font Style of the Label 
 		private float							fLabelFontSize;					// Size of the Label 
@@ -51,14 +54,18 @@ namespace CustomRangeSelectorControl
 		private uint							unGapFromLeftMargin;			// Gap from the Left Margin to draw the Bar
 		private uint							unGapFromRightMargin;			// Gap from the Right Margin to draw the Bar
 		private string							strDelimiter;					// Delimiter used to seperate the Labels in strRange variable
-		private string							strRange1;						// Thumb 1 Position bar
-		private string							strRange2;						// Thumb 2 Position in the bar
+        private int                             intRangeMinSelected;            // integer position of thumb1
+        private int                             intRangeMaxSelected;            // integer position of thumb2
+		//private string							strRange1;						// Thumb 1 Position bar
+		//private string							strRange2;						// Thumb 2 Position in the bar
         private string                          strRange1Temp;
         private string                          strRange2Temp;
 		private Font							fntRangeOutputStringFont;		// Range Output string font
 		private float							fStringOutputFontSize;			// String Output Font Size
 		private Color							clrStringOutputFontColor;		// Color of the Output Font 
 		private FontFamily						fntStringOutputFontFamily;		// Font Family to display the Range string
+        private bool                            bShowStepLabels;                // indicates whether or not to show the step label
+        private bool                            bUseCustomLabels;               // indicates if control should use custom or automatic labels
 
 		/// <ControlVariables>
 		/// The Above are Design time Control Variables.  These variables can be used by the client
@@ -175,18 +182,20 @@ namespace CustomRangeSelectorControl
 		{ 
 			set
 			{
-				// Splitting the Range Value to display in the control
-                strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
-                nNumberOfLabels = strSplitLabels.Length;
-                strRange = value;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    // Splitting the Range Value to display in the control
+                    //strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
+                    //nNumberOfLabels = strSplitLabels.Length;
+                    strRange = value;
+                    Range1 = strRange1Temp;
+                    Range2 = strRange2Temp;
 
-                strRange1 = strRange1Temp;
-                strRange2 = strRange2Temp;
-
-                CalculateValues();
-                this.Refresh();
-                //OnPaint(ePaintArgs);
-                WindUpdated();
+                    CalculateValues();
+                    this.Refresh();
+                    //OnPaint(ePaintArgs);
+                    WindUpdated();
+                }
 			}
 
 			get
@@ -194,6 +203,98 @@ namespace CustomRangeSelectorControl
 				return strRange;
 			}
 		}
+
+        /// <RangeMax>
+        /// Range Max is the maximum value of the slider
+        /// RangeValues in the range can be automatic or user defined
+        /// </RangeMax>
+        public int RangeMax
+        {
+            set
+            {
+                intRangeMax = value;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+            get
+            {
+                return intRangeMax;
+            }
+        }
+
+        /// <RangeMin>
+        /// Range Max is the minimum value of the slider
+        /// RangeValues in the range can be automatic or user defined
+        /// </RangeMin>
+        public int RangeMin
+        {
+            set
+            {
+                intRangeMin = value;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+            get
+            {
+                return intRangeMin;
+            }
+        }
+
+        /// <RangeStep>
+        /// Range Step defines the automatic values between RangeMin and RangeMax
+        /// </RangeStep>
+        public double RangeStep
+        {
+            set
+            {
+                doubleRangeStep = value;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+            get
+            {
+                return doubleRangeStep;
+            }
+        }
+
+        /// <UseCustomLabels>
+        /// Indicate whether or not to use custom labels
+        /// </UseCustomLabels>
+        public bool UseCustomLabels
+        {
+            set
+            {
+                bUseCustomLabels = value;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+            get
+            {
+                return bUseCustomLabels;
+            }
+        }
+
+        /// <ShowStepLabels>
+        /// Indicates whether or not the step labels are displayed
+        /// </ShowStepLabels>
+        public bool ShowStepLabels
+        {
+            set
+            {
+                bShowStepLabels = value;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+            get
+            {
+                return bShowStepLabels;
+            }
+        }
 
 
 		/// <LabelFont>
@@ -565,16 +666,10 @@ namespace CustomRangeSelectorControl
 		{
 			set
 			{
-				
-                strRange1Temp = value;
-                if (strSplitLabels.Length != 0)
+                if (! strRange1Temp.Equals(value))
                 {
-                    
-                    strRange1 = value;
-                    CalculateValues();
-                    this.Refresh();
-                    //OnPaint(ePaintArgs);
-                    WindUpdated();
+                    strRange1Temp = value;
+                    SetMinSelected(strRange1Temp);
                 }
 			}
 
@@ -583,6 +678,30 @@ namespace CustomRangeSelectorControl
 				return strRange1Temp;
 			}
 		}
+
+        private void SetMinSelected(string val)
+        {
+            var sel = Array.FindIndex(strSplitLabels, s => s == val);
+            if (sel > -1 && sel != intRangeMinSelected)
+            {
+                intRangeMinSelected = sel;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+        }
+
+        private void SetMaxSelected(string val)
+        {
+            var sel = Array.FindIndex(strSplitLabels, s => s == val);
+            if (sel > -1 && sel != intRangeMaxSelected)
+            {
+                intRangeMaxSelected = sel;
+                CalculateValues();
+                this.Refresh();
+                WindUpdated();
+            }
+        }
 
 		/// <Range2>
 		/// The user can specify the Range2 Value. The Setter and getter methods are as below
@@ -593,15 +712,10 @@ namespace CustomRangeSelectorControl
 		{
 			set
 			{
-				strRange2Temp = value;
-
-                if (strSplitLabels.Length != 0)
+                if (! strRange2Temp.Equals(value))
                 {
-                    strRange2 = value;
-                    CalculateValues();
-                    this.Refresh();
-                    //OnPaint(ePaintArgs);
-                    WindUpdated();
+                    strRange2Temp = value;
+                    SetMaxSelected(strRange2Temp);
                 }
             }
 
@@ -705,8 +819,8 @@ namespace CustomRangeSelectorControl
 			strRangeString				= "Range";
 			strDelimiter				=  ",";  // Because in Germany decimal point is represented as , i.e., "10.50 in US" is "10,50 in Germany"
 			strRange					= "0,10,20,30,Good,50,60,70,Great,90,100";
-			strRange1					= "10";
-			strRange2					= "90";
+			strRange1Temp				= "10";
+			strRange2Temp				= "90";
 			strLeftImagePath			= null;
 			strRightImagePath			= null;
 			fHeightOfThumb				= 20.0f;
@@ -719,8 +833,8 @@ namespace CustomRangeSelectorControl
 			clrThumbColor				= System.Drawing.Color.Purple;
 			fStringOutputFontSize		= 10.0f;
 			clrStringOutputFontColor	= System.Drawing.Color.Black;
-			fntStringOutputFontFamily	= System.Drawing.FontFamily.GenericSerif;
-			fntRangeOutputStringFont	= new System.Drawing.Font(fntStringOutputFontFamily, fStringOutputFontSize, System.Drawing.FontStyle.Bold);	
+			fntStringOutputFontFamily	= System.Drawing.FontFamily.GenericSansSerif;
+			fntRangeOutputStringFont	= new System.Drawing.Font(fntStringOutputFontFamily, fStringOutputFontSize, System.Drawing.FontStyle.Regular);	
 
 			unSizeOfMiddleBar			= 3;
 			unGapFromLeftMargin			= 10;
@@ -730,7 +844,7 @@ namespace CustomRangeSelectorControl
 			fntLabelFontStyle			= System.Drawing.FontStyle.Bold;
 			fntLabelFont				= new System.Drawing.Font(fntLabelFontFamily, fLabelFontSize, fntLabelFontStyle);
 
-			strSplitLabels				= new string[1024];
+			strSplitLabels				= new string[0];
 			ptThumbPoints1				= new System.Drawing.PointF[3];
 			ptThumbPoints2				= new System.Drawing.PointF[3];
 
@@ -759,8 +873,8 @@ namespace CustomRangeSelectorControl
 		/// 
 		public void QueryRange(out string strGetRange1, out string strGetRange2)
 		{
-			strGetRange1 = strRange1.ToString();
-			strGetRange2 = strRange2.ToString();
+			strGetRange1 = Range1.ToString();
+			strGetRange2 = Range2.ToString();
 		}
 
 		/// <RegisterForChangeEvent>
@@ -775,8 +889,8 @@ namespace CustomRangeSelectorControl
 				if (null != refNotifyClient)
 				{
 					objNotifyClient			= refNotifyClient;
-					objNotifyClient.Range1	= strRange1;
-					objNotifyClient.Range2	= strRange2;
+					objNotifyClient.Range1	= Range1;
+					objNotifyClient.Range2	= Range2;
 				}
 			}
 			catch
@@ -798,9 +912,28 @@ namespace CustomRangeSelectorControl
 				// Creating the Graphics object
 				System.Drawing.Graphics myGraphics = this.CreateGraphics();
 
-				// Split the Labels to be displayed below the Bar
-				strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
-				nNumberOfLabels = strSplitLabels.Length;
+                if (bUseCustomLabels)
+                {
+                    // Split the Labels to be displayed below the Bar
+                    strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
+                    nNumberOfLabels = strSplitLabels.Length;
+                }
+                else
+                {
+                    if ((int)doubleRangeStep == 0)
+                        throw new ArgumentException("Can not have zero step size with UseCustomLabels=false", "doubleRangeStep");
+
+                    nNumberOfLabels = (int)((intRangeMax - intRangeMin) / doubleRangeStep) + 1;
+                    strSplitLabels = new string[nNumberOfLabels];
+                    //build automatic labels
+                    for (int i = 0; i < nNumberOfLabels; ++i)
+                    {
+                        if ((double)(int)doubleRangeStep == doubleRangeStep)
+                            strSplitLabels[i] = string.Format("{0}", intRangeMin + (int)(i * doubleRangeStep));
+                        else
+                            strSplitLabels[i] = string.Format("{0:0.00}", intRangeMin + (i * doubleRangeStep));
+                    }
+                }
 
 				// If there's an image load the Image from the file
 				if (null != strLeftImagePath)
@@ -826,22 +959,25 @@ namespace CustomRangeSelectorControl
                 int nRangeIndex1Selected = 0;
                 int nRangeIndex2Selected = nNumberOfLabels  - 1;
 
+                SetMinSelected(Range1);
+                SetMaxSelected(Range2);
+
 				// This is used to calculate the Thumb Point from the  Range1, Range2 Value
 				for(int nIndexer = 0;nIndexer < nNumberOfLabels;nIndexer++)
 				{
-					if (strRange1.Equals(strSplitLabels[nIndexer]))
+					if ( intRangeMinSelected == nIndexer /*strRange1.Equals(strSplitLabels[nIndexer])*/)
 					{
 						fThumb1Point = fLeftCol + fDividedWidth * nIndexer;
                         nRangeIndex1Selected  = nIndexer;
 					}
-					if (strRange2.Equals(strSplitLabels[nIndexer]))
+					if ( intRangeMaxSelected == nIndexer /*strRange2.Equals(strSplitLabels[nIndexer])*/)
 					{
 						fThumb2Point = fLeftCol + fDividedWidth * nIndexer;
                         nRangeIndex2Selected = nIndexer;
 					}
 				}
 
-                if (strRange1 == strRange2)
+                if ( intRangeMinSelected == intRangeMaxSelected /*strRange1 == strRange2*/)
                 {
                     if (nRangeIndex1Selected != 0)
                     {
@@ -942,7 +1078,7 @@ namespace CustomRangeSelectorControl
             myGraphics.DrawLine(myPen, fRightCol, ptThumbPoints1[2].Y, fRightCol, ptThumbPoints1[2].Y + fntLabelFont.SizeInPoints);
 
             brSolidBrush = new System.Drawing.SolidBrush(clrStringOutputFontColor);
-            myGraphics.DrawString(strRangeString, fntRangeOutputStringFont, brSolidBrush, fLeftCol, fLeftRow * 2 - fntRangeOutputStringFont.Size - 3);
+            myGraphics.DrawString(strRangeString, fntRangeOutputStringFont, brSolidBrush, fLeftCol, fLeftRow * 2 - fntRangeOutputStringFont.Height);
 
             myPen = new System.Drawing.Pen(clrInFocusBarColor, unSizeOfMiddleBar);
             myGraphics.DrawLine(myPen, ptThumbPoints1[2].X, ptThumbPoints1[2].Y, fThumb2Point,/* - fWidthOfThumb*/ ptThumbPoints1[2].Y);
@@ -999,48 +1135,50 @@ namespace CustomRangeSelectorControl
 				strNewRange1	= null;
 				strNewRange2	= null;
 
-				// This loop is to draw the Labels on the screen.
-				for(int nIndexer = 0;nIndexer < nNumberOfLabels;nIndexer++)
-				{
-					fDividerCounter		= fLeftCol +  fDividedWidth * nIndexer ;
-					fIsThumb1Crossed	= fDividerCounter + strSplitLabels[nIndexer].Length * fntLabelFont.SizeInPoints/2;
-					fIsThumb2Crossed	= fDividerCounter - (strSplitLabels[nIndexer].Length - 1) * fntLabelFont.SizeInPoints/2;
-					if (fIsThumb1Crossed >= fThumb1Point && strNewRange1 == null)
-					{
-						// If Thumb1 Crossed this Label Make it in Focus color
-						brSolidBrush	= new System.Drawing.SolidBrush(clrInFocusRangeLabelColor);
-						strNewRange1	= strSplitLabels[nIndexer];
-					}
-					if (fIsThumb2Crossed > fThumb2Point)
-					{
-						// If Thumb2 crossed this draw the labes following this in disabled color
-						brSolidBrush	= new System.Drawing.SolidBrush(clrDisabledRangeLabelColor);
-						//strNewRange2	= strSplitLabels[nIndexer];
-					}
-					else 
-					{
-						strNewRange2	= strSplitLabels[nIndexer];
-					}
+                // This loop is to draw the Labels on the screen.
+                for (int nIndexer = 0; nIndexer < nNumberOfLabels; nIndexer++)
+                {
+                    fDividerCounter = fLeftCol + fDividedWidth * nIndexer;
+                    fIsThumb1Crossed = fDividerCounter + strSplitLabels[nIndexer].Length * fntLabelFont.SizeInPoints / 2;
+                    fIsThumb2Crossed = fDividerCounter - (strSplitLabels[nIndexer].Length - 1) * fntLabelFont.SizeInPoints / 2;
+                    if (fIsThumb1Crossed >= fThumb1Point && strNewRange1 == null)
+                    {
+                        // If Thumb1 Crossed this Label Make it in Focus color
+                        brSolidBrush = new System.Drawing.SolidBrush(clrInFocusRangeLabelColor);
+                        strNewRange1 = strSplitLabels[nIndexer];
+                    }
+                    if (fIsThumb2Crossed > fThumb2Point)
+                    {
+                        // If Thumb2 crossed this draw the labes following this in disabled color
+                        brSolidBrush = new System.Drawing.SolidBrush(clrDisabledRangeLabelColor);
+                        //strNewRange2	= strSplitLabels[nIndexer];
+                    }
+                    else
+                    {
+                        strNewRange2 = strSplitLabels[nIndexer];
+                    }
 
-					myGraphics.DrawString(strSplitLabels[nIndexer], fntLabelFont, brSolidBrush, fDividerCounter - ((fntLabelFont.SizeInPoints) *  strSplitLabels[nIndexer].Length)/2, fLeftRow);
-				}
+                    if (bShowStepLabels) myGraphics.DrawString(strSplitLabels[nIndexer], fntLabelFont, brSolidBrush, fDividerCounter - ((fntLabelFont.SizeInPoints) * strSplitLabels[nIndexer].Length) / 2, fLeftRow);
+                }
 
 				// This is to draw exactly the Range String like "Range 10 to 100" 
 				// This will draw the information only if there is a change. 
 				if (strNewRange1 != null && strNewRange2 != null && 
-					(!strRange1.Equals(strNewRange1) || !strRange2.Equals(strNewRange2)) ||
+					(!Range1.Equals(strNewRange1) || !Range2.Equals(strNewRange2)) ||
 					(!bMouseEventThumb1 && !bMouseEventThumb2))
 				{
+                    //draw over the old string with the BackColor
 					brSolidBrush		= new System.Drawing.SolidBrush(this.BackColor);
-					strRangeOutput	= strRange1 + " - " + strRange2;
-					myGraphics.DrawString(strRangeOutput , fntRangeOutputStringFont, brSolidBrush, fLeftCol + fntRangeOutputStringFont.Size * strRangeString.Length , fLeftRow * 2 - fntRangeOutputStringFont.Size - 3);
+					strRangeOutput	= Range1 + " - " + Range2;
+					myGraphics.DrawString(strRangeOutput , fntRangeOutputStringFont, brSolidBrush, fLeftCol + fntRangeOutputStringFont.Size * strRangeString.Length , fLeftRow * 2 - fntRangeOutputStringFont.Height);
 
+                    //draw the new string
 					brSolidBrush		= new System.Drawing.SolidBrush(clrStringOutputFontColor);
 					strRangeOutput	= strNewRange1 + " - " + strNewRange2;
-					myGraphics.DrawString(strRangeOutput , fntRangeOutputStringFont, brSolidBrush, fLeftCol + fntRangeOutputStringFont.Size * strRangeString.Length , fLeftRow * 2 - fntRangeOutputStringFont.Size - 3);
+					myGraphics.DrawString(strRangeOutput , fntRangeOutputStringFont, brSolidBrush, fLeftCol + fntRangeOutputStringFont.Size * strRangeString.Length , fLeftRow * 2 - fntRangeOutputStringFont.Height);
 
-					strRange1 = strNewRange1;
-					strRange2 = strNewRange2;
+                    Range1 = strNewRange1;
+                    Range2 = strNewRange2;
 				}
 
                 if (bAnimateTheSlider)
@@ -1190,7 +1328,7 @@ namespace CustomRangeSelectorControl
 			if (bMouseEventThumb1 && e.Button == System.Windows.Forms.MouseButtons.Left && e.X >= fLeftCol )
 			{
 				// The below code is for handlling the Thumb1 Point
-				if (strRange1.Equals(strRange2))
+				if (intRangeMinSelected == intRangeMaxSelected /*strRange1.Equals(strRange2)*/)
 				{
 					if (e.X < fThumb1Point)
 					{
@@ -1214,7 +1352,7 @@ namespace CustomRangeSelectorControl
 			else if (bMouseEventThumb2 && e.Button == System.Windows.Forms.MouseButtons.Left && e.X <= fRightCol)
 			{
 				// The below code is for handlling the Thumb1 Point
-				if (strRange1.Equals(strRange2))
+				if (intRangeMinSelected == intRangeMaxSelected /*strRange1.Equals(strRange2)*/)
 				{
 					if (e.X > fThumb2Point)
 					{
@@ -1238,8 +1376,8 @@ namespace CustomRangeSelectorControl
 			// If there is an Object Notification
 			if (null != objNotifyClient)
 			{
-				objNotifyClient.Range1	= strRange1;
-				objNotifyClient.Range2	= strRange2;
+				objNotifyClient.Range1	= Range1;
+				objNotifyClient.Range2	= Range2;
 			}
 		}
 	
