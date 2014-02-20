@@ -249,6 +249,12 @@ namespace CustomRangeSelectorControl
         {
             set
             {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("RangeStep must be greater than zero", "RangeStep");
+                    return;
+                }
+
                 doubleRangeStep = value;
                 CalculateValues();
                 this.Refresh();
@@ -666,7 +672,8 @@ namespace CustomRangeSelectorControl
 		{
 			set
 			{
-                if (! strRange1Temp.Equals(value))
+                if (value == null) return;
+                if (strRange1Temp == null || ! strRange1Temp.Equals(value))
                 {
                     strRange1Temp = value;
                     SetMinSelected(strRange1Temp);
@@ -712,7 +719,8 @@ namespace CustomRangeSelectorControl
 		{
 			set
 			{
-                if (! strRange2Temp.Equals(value))
+                if (value == null) return;
+                if (strRange2Temp == null || ! strRange2Temp.Equals(value))
                 {
                     strRange2Temp = value;
                     SetMaxSelected(strRange2Temp);
@@ -834,7 +842,13 @@ namespace CustomRangeSelectorControl
 			fStringOutputFontSize		= 10.0f;
 			clrStringOutputFontColor	= System.Drawing.Color.Black;
 			fntStringOutputFontFamily	= System.Drawing.FontFamily.GenericSansSerif;
-			fntRangeOutputStringFont	= new System.Drawing.Font(fntStringOutputFontFamily, fStringOutputFontSize, System.Drawing.FontStyle.Regular);	
+			fntRangeOutputStringFont	= new System.Drawing.Font(fntStringOutputFontFamily, fStringOutputFontSize, System.Drawing.FontStyle.Regular);
+
+            bUseCustomLabels            = true;
+            bShowStepLabels             = true;
+            intRangeMax                 = 10;
+            intRangeMin                 = 0;
+            doubleRangeStep             = 1;
 
 			unSizeOfMiddleBar			= 3;
 			unGapFromLeftMargin			= 10;
@@ -920,8 +934,8 @@ namespace CustomRangeSelectorControl
                 }
                 else
                 {
-                    if ((int)doubleRangeStep == 0)
-                        throw new ArgumentException("Can not have zero step size with UseCustomLabels=false", "doubleRangeStep");
+                    if (doubleRangeStep <= 0)
+                        throw new ArgumentException("Step size must be positive with UseCustomLabels=false", "doubleRangeStep");
 
                     nNumberOfLabels = (int)((intRangeMax - intRangeMin) / doubleRangeStep) + 1;
                     strSplitLabels = new string[nNumberOfLabels];
