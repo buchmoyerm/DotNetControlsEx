@@ -956,7 +956,6 @@ namespace CustomRangeSelectorControl
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-            {   
 			try
 			{
 				// Declaration of the local variables that are used.
@@ -1074,7 +1073,6 @@ namespace CustomRangeSelectorControl
 				//System.Windows.Forms.MessageBox.Show("An Unexpected Error occured. Please contact the tool vendor", "Error!");
 				//throw;
 			}
-        }
 		}
 		/// <Paint >
 		/// The Above is the method that draws the control on the screen

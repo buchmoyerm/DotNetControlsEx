@@ -41,8 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoDoubleBufferedControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AutoDoubleBufferedControl.Designer.cs">
+      <DependentUpon>AutoDoubleBufferedControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomRangeSelectorControl\RangeControl.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ManualDoubleBufferedControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ManualDoubleBufferedControl.Designer.cs">
+      <DependentUpon>ManualDoubleBufferedControl.cs</DependentUpon>
     </Compile>
     <Compile Include="TextBoxEx.cs">
       <SubType>Component</SubType>
