@@ -19,10 +19,13 @@ namespace DotNetControlsEx
         {
             InitializeComponent();
 
+            //control styles used for double buffering
             this.SetStyle(
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.OptimizedDoubleBuffer, true);
+
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
         }
 
         protected override void OnPaint(PaintEventArgs pe)

@@ -27,6 +27,7 @@ namespace DotNetControlsEx
             Application.ApplicationExit +=
                new EventHandler(MemoryCleanup);
 
+            //Set this style to achieve double buffering correctly
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
             GraphicManager = BufferedGraphicsManager.Current;
@@ -35,6 +36,8 @@ namespace DotNetControlsEx
             ManagedBackBuffer =
                 GraphicManager.Allocate(this.CreateGraphics(),
                                                ClientRectangle);
+
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
         }
 
         private void MemoryCleanup(object sender, EventArgs e)

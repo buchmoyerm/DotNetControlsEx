@@ -20,7 +20,7 @@ namespace CustomRangeSelectorControl
 	/// 
 
 	[ToolboxBitmap(typeof(CustomRangeSelectorControl.RangeSelectorControl), "CustomRangeSelectorControl/RangeScale.bmp")]
-	public class RangeSelectorControl : System.Windows.Forms.UserControl
+	public class RangeSelectorControl : DotNetControlsEx.AutoDoubleBufferedControl
 	{
 		/// <ControlVariables>
 		/// The Below are Design time (Also Runtime) Control Variables.  These variables 
@@ -117,7 +117,8 @@ namespace CustomRangeSelectorControl
 
 						CalculateValues();
 						this.Refresh();
-						OnPaint(ePaintArgs);
+						//OnPaint(ePaintArgs);
+                        WindUpdated();
 					}
 				}
 				catch
@@ -127,6 +128,7 @@ namespace CustomRangeSelectorControl
 					//CalculateValues();
 					//this.Refresh();
 					//OnPaint(ePaintArgs);
+                    WindUpdated();
 
 					System.Windows.Forms.MessageBox.Show("The XML Path entered may be invalid (or) The XML file is not well formed", "Error!");
 				}
@@ -153,7 +155,8 @@ namespace CustomRangeSelectorControl
 				strRangeString = value;
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -182,7 +185,8 @@ namespace CustomRangeSelectorControl
 
                 CalculateValues();
                 this.Refresh();
-                OnPaint(ePaintArgs);
+                //OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -204,8 +208,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
-
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 			
 			get
@@ -229,7 +233,8 @@ namespace CustomRangeSelectorControl
 
 					CalculateValues();
 					this.Refresh();
-					OnPaint(ePaintArgs);
+					//OnPaint(ePaintArgs);
+                    WindUpdated();
 				}
 				catch
 				{
@@ -258,7 +263,8 @@ namespace CustomRangeSelectorControl
 
 					CalculateValues();
 					this.Refresh();
-					OnPaint(ePaintArgs);
+					//OnPaint(ePaintArgs);
+                    WindUpdated();
 				}
 				catch
 				{
@@ -288,7 +294,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -311,7 +318,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -335,7 +343,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -358,7 +367,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -381,7 +391,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -405,7 +416,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -427,7 +439,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -449,7 +462,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -471,7 +485,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -493,7 +508,8 @@ namespace CustomRangeSelectorControl
 
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -524,7 +540,8 @@ namespace CustomRangeSelectorControl
 
 					CalculateValues();
 					this.Refresh();
-					OnPaint(ePaintArgs);
+					//OnPaint(ePaintArgs);
+                    WindUpdated();
 				}
 				catch
 				{
@@ -556,7 +573,8 @@ namespace CustomRangeSelectorControl
                     strRange1 = value;
                     CalculateValues();
                     this.Refresh();
-                    OnPaint(ePaintArgs);
+                    //OnPaint(ePaintArgs);
+                    WindUpdated();
                 }
 			}
 
@@ -582,7 +600,8 @@ namespace CustomRangeSelectorControl
                     strRange2 = value;
                     CalculateValues();
                     this.Refresh();
-                    OnPaint(ePaintArgs);
+                    //OnPaint(ePaintArgs);
+                    WindUpdated();
                 }
             }
 
@@ -603,7 +622,8 @@ namespace CustomRangeSelectorControl
 				clrStringOutputFontColor =  value;
 				CalculateValues();
 				this.Refresh();
-				OnPaint(ePaintArgs);
+				//OnPaint(ePaintArgs);
+                WindUpdated();
 			}
 
 			get
@@ -640,7 +660,7 @@ namespace CustomRangeSelectorControl
 		private float							fTotalWidth;				// Total Width
 		private float							fDividedWidth;				// Divided Width
 
-		private PaintEventArgs					ePaintArgs;					// Paint Args
+		//private PaintEventArgs					ePaintArgs;					// Paint Args
 		private int								nNumberOfLabels;			// Total Number of Labels
 		private string[]						strSplitLabels;				// To store the Split Labels
 		private PointF[]						ptThumbPoints1;				// To Store Thumb Point1
@@ -868,7 +888,7 @@ namespace CustomRangeSelectorControl
 		/// 
 		#region Paint Method Override -- This method draws the control on the screen
 
-        private void OnPaintDrawSliderAndBar(System.Drawing.Graphics myGraphics, PaintEventArgs e)
+        private void OnPaintDrawSliderAndBar(System.Drawing.Graphics myGraphics)
         {
             System.Drawing.Brush brSolidBrush;
             System.Drawing.Pen myPen;
@@ -954,7 +974,13 @@ namespace CustomRangeSelectorControl
 
         }
 
-		protected override void OnPaint(PaintEventArgs e)
+        public void WindUpdated()
+        {
+            this.Invalidate();
+            this.Update();
+        }
+
+        protected override void DoPaint(Graphics myGraphics)
 		{
 			try
 			{
@@ -966,8 +992,8 @@ namespace CustomRangeSelectorControl
 				string							strNewRange1, strNewRange2;
 
 				// Initialization of the local variables.
-				System.Drawing.Graphics myGraphics	= this.CreateGraphics();
-				ePaintArgs							= e;
+				//System.Drawing.Graphics myGraphics	= this.CreateGraphics();
+				//ePaintArgs							= e;
 				fDividerCounter						= 0;
 				brSolidBrush	= new System.Drawing.SolidBrush(clrDisabledRangeLabelColor);
 				strNewRange1	= null;
@@ -1040,7 +1066,7 @@ namespace CustomRangeSelectorControl
                             fThumb2Point = fTempThumb2Point;
                         }
 
-                        OnPaintDrawSliderAndBar(myGraphics, e);
+                        OnPaintDrawSliderAndBar(myGraphics);
                         if (System.Environment.TickCount - nToMakeItTimely >= 1000)
                         {
                             // Hey its not worth having animation for more than 1 sec.  
@@ -1053,20 +1079,20 @@ namespace CustomRangeSelectorControl
                     fThumb2Point = fTempThumb2Point;
                     bMouseEventThumb1 = true;
                     bMouseEventThumb2 = true;
-                    OnPaintDrawSliderAndBar(myGraphics, e);
+                    OnPaintDrawSliderAndBar(myGraphics);
 
                     bAnimateTheSlider = false;
                     bMouseEventThumb1 = false;
                     bMouseEventThumb2 = false;
-                    OnPaintDrawSliderAndBar(myGraphics, e);
+                    OnPaintDrawSliderAndBar(myGraphics);
                 }
                 else
                 {
-                    OnPaintDrawSliderAndBar(myGraphics, e);
+                    OnPaintDrawSliderAndBar(myGraphics);
                 }
 
 				// calling the base class.
-				base.OnPaint (e);
+				base.DoPaint (myGraphics);
 			}
 			catch
 			{
@@ -1106,7 +1132,7 @@ namespace CustomRangeSelectorControl
 			this.Name = "RangeSelectorControl";
 			this.Size = new System.Drawing.Size(360, 80);
 			this.Resize += new System.EventHandler(this.RangeSelectorControl_Resize);
-			this.Load += new System.EventHandler(this.RangeSelectorControl_Load);
+			//this.Load += new System.EventHandler(this.RangeSelectorControl_Load);
 			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RangeSelectorControl_MouseUp);
 			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.RangeSelectorControl_MouseMove);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RangeSelectorControl_MouseDown);
@@ -1115,10 +1141,10 @@ namespace CustomRangeSelectorControl
 		#endregion
 
 
-		private void RangeSelectorControl_Load(object sender, System.EventArgs e)
-		{
-			CalculateValues();
-		}
+        //private void RangeSelectorControl_Load(object sender, System.EventArgs e)
+        //{
+        //    CalculateValues();
+        //}
 
 		/// <MouseEvents>
 		/// The below are the methods used for handling Mouse Events
@@ -1138,6 +1164,7 @@ namespace CustomRangeSelectorControl
             CalculateValues();
             bAnimateTheSlider = true;
             this.Refresh();
+            this.WindUpdated();
 		}
 
 		private void RangeSelectorControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -1168,13 +1195,15 @@ namespace CustomRangeSelectorControl
 					if (e.X < fThumb1Point)
 					{
 						fThumb1Point = e.X;
-						OnPaint(ePaintArgs);
+						//OnPaint(ePaintArgs);
+                        WindUpdated();
 					}
 				}
 				else if (fThumb2Point - fWidthOfThumb > e.X)
 				{
 					fThumb1Point = e.X;
-					OnPaint(ePaintArgs);
+					//OnPaint(ePaintArgs);
+                    WindUpdated();
 				}
 				else
 				{
@@ -1190,13 +1219,15 @@ namespace CustomRangeSelectorControl
 					if (e.X > fThumb2Point)
 					{
 						fThumb2Point = e.X;
-						OnPaint(ePaintArgs);
+						//OnPaint(ePaintArgs);
+                        WindUpdated();
 					}
 				}
 				else if (fThumb1Point + fWidthOfThumb < e.X)
 				{
 					fThumb2Point = e.X;
-					OnPaint(ePaintArgs);
+					//OnPaint(ePaintArgs);
+                    WindUpdated();
 				}
 				else
 				{
@@ -1226,8 +1257,8 @@ namespace CustomRangeSelectorControl
 		{
 			CalculateValues();
 			this.Refresh();
-			OnPaint(ePaintArgs);
-		
+			//OnPaint(ePaintArgs);
+            WindUpdated();
 		}
 	}
 
