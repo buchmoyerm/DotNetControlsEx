@@ -11,6 +11,23 @@ using System.Xml;
 
 namespace CustomRangeSelectorControl
 {
+    /// <summary>
+    /// This is the notification EventArgs for updates to the current range
+    /// </summary>
+    /// 
+
+    public class RangeUpdateEventArgs : EventArgs
+    {
+        public RangeUpdateEventArgs(string minRange, string maxRange)
+        {
+            MinRangeSelected = minRange;
+            MaxRangeSelected = maxRange;
+        }
+
+        public string MinRangeSelected {get; private set;}
+        public string MaxRangeSelected { get; private set; }
+    }
+    
 	/// <summary>
 	/// This is a custom control that allows the user of the control  to select a range of values 
 	/// using two "thumbs".  The control allows the client to change the appearance of the control. 
@@ -761,7 +778,13 @@ namespace CustomRangeSelectorControl
 		/// 
 		#endregion
 
-		/// <ProgramVariables>
+        #region Control Events
+
+        public event EventHandler<RangeUpdateEventArgs> RangeUpdate;
+
+        #endregion Control Events
+
+        /// <ProgramVariables>
 		/// The Below are Variables used for computation.  
 		/// </ProgramVariables>
 		/// 
@@ -1393,6 +1416,12 @@ namespace CustomRangeSelectorControl
 				objNotifyClient.Range1	= Range1;
 				objNotifyClient.Range2	= Range2;
 			}
+
+            var temp = RangeUpdate;
+            if (temp != null)
+            {
+                temp(this, new RangeUpdateEventArgs(Range1, Range2));
+            }
 		}
 	
 		/// <MouseEvents>
