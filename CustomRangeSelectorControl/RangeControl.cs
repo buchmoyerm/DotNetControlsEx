@@ -1176,8 +1176,17 @@ namespace CustomRangeSelectorControl
                 for (int nIndexer = 0; nIndexer < nNumberOfLabels; nIndexer++)
                 {
                     fDividerCounter = fLeftCol + fDividedWidth * nIndexer;
-                    fIsThumb1Crossed = fDividerCounter + strSplitLabels[nIndexer].Length * fntLabelFont.SizeInPoints / 2;
-                    fIsThumb2Crossed = fDividerCounter - (strSplitLabels[nIndexer].Length - 1) * fntLabelFont.SizeInPoints / 2;
+
+                    if (bShowStepLabels)//split by size of labels
+                    {
+                        fIsThumb1Crossed = fDividerCounter + strSplitLabels[nIndexer].Length * fntLabelFont.SizeInPoints / 2;
+                        fIsThumb2Crossed = fDividerCounter - (strSplitLabels[nIndexer].Length - 1) * fntLabelFont.SizeInPoints / 2;
+                    }
+                    else // split by even sizes
+                    {
+                        fIsThumb1Crossed = fDividerCounter + fDividedWidth / 2;
+                        fIsThumb2Crossed = fDividerCounter - fDividedWidth / 2;
+                    }
                     if (fIsThumb1Crossed >= fThumb1Point && strNewRange1 == null)
                     {
                         // If Thumb1 Crossed this Label Make it in Focus color
