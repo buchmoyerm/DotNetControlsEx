@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -41,20 +42,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accordion.cs">
+      <subtype>Component</subtype>
+    </Compile>
+    <Compile Include="Accordion.Designer.cs">
+      <DependentUpon>Accordion.cs</DependentUpon>
+    </Compile>
     <Compile Include="AutoDoubleBufferedControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="AutoDoubleBufferedControl.Designer.cs">
       <DependentUpon>AutoDoubleBufferedControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CollapsiblePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CollapsiblePanel.Designer.cs">
+      <DependentUpon>CollapsiblePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CollapsiblePanelActionList.cs" />
+    <Compile Include="CollapsiblePanelDesigner.cs" />
     <Compile Include="CustomRangeSelectorControl\RangeControl.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Expander.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Expander.Designer.cs">
+      <DependentUpon>Expander.cs</DependentUpon>
     </Compile>
     <Compile Include="ManualDoubleBufferedControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ManualDoubleBufferedControl.Designer.cs">
       <DependentUpon>ManualDoubleBufferedControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TextBoxEx.cs">
       <SubType>Component</SubType>
@@ -63,6 +89,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CustomRangeSelectorControl\RangeScale.bmp" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\collapse.gif" />
+    <Content Include="Resources\Collapse.png" />
+    <Content Include="Resources\collapse_hightlight.gif" />
+    <Content Include="Resources\expand.gif" />
+    <Content Include="Resources\Expand.png" />
+    <Content Include="Resources\expand_highlight.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
