@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DotNetControlsEx.Properties;
+
+// This control is a combination of two other collapsiblepanels
+// http://jfblier.wordpress.com/2011/02/16/window-form-expander/
+// http://www.codeproject.com/Articles/53318/C-Custom-Control-Featuring-a-Collapsible-Panel
 
 namespace DotNetControlsEx
 {
@@ -534,14 +534,15 @@ namespace DotNetControlsEx
         }
     }
 
-    class CollapsiblePanelHeader : Control
+    public class CollapsiblePanelHeader : Control
     {
-        private Label _leftJustifiedLabel;
-        private Label _rightJustifiedLabel;
-        private Label _centerJustifiedLabel;
+        protected Label _leftJustifiedLabel;
+        protected Label _rightJustifiedLabel;
+        protected Label _centerJustifiedLabel;
+
+        private Color _savedBackColor;
 
         private bool _autoElipses;
-        private Font _font;
 
         public CollapsiblePanelHeader()
         {
@@ -566,6 +567,8 @@ namespace DotNetControlsEx
 
             _leftJustifiedLabel.Anchor = AnchorStyles.Left | AnchorStyles.Top;
             _rightJustifiedLabel.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+
+            _savedBackColor = BackColor;
         }
 
         public bool TextAutoEllipsis
@@ -606,6 +609,20 @@ namespace DotNetControlsEx
         {
             e.Control.Click += Control_Click;
             base.OnControlAdded(e);
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            _savedBackColor = BackColor;
+            base.OnMouseEnter(e);
+
+            BackColor = Utils.ColorUtil.LightenColor(BackColor, 0.1);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            BackColor = _savedBackColor;
+            base.OnMouseLeave(e);
         }
 
         void Control_Click(object sender, EventArgs e)
@@ -727,4 +744,8 @@ namespace DotNetControlsEx
             PositionLabels();
         }
     }
+}
+
+namespace Utils
+{
 }

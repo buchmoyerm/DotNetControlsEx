@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="CollapsiblePanelExActionList.cs" />
     <Compile Include="CollapsiblePanelExDesigner.cs" />
+    <Compile Include="ColorUtil.cs" />
     <Compile Include="CustomRangeSelectorControl\RangeControl.cs">
       <SubType>Component</SubType>
     </Compile>
