@@ -1,6 +1,6 @@
 ﻿namespace DotNetControlsEx
 {
-    partial class Accordion
+    partial class CollapsiblePanelEx
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,10 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.components = new System.ComponentModel.Container();
+            this.timerAnimation = new System.Windows.Forms.Timer(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.SuspendLayout();
+            // 
+            // timerAnimation
+            // 
+            this.timerAnimation.Interval = 25;
+            this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
+            // 
+            // CollapsiblePanel
+            // 
+            this.Name = "CollapsiblePanel";
+            this.Size = new System.Drawing.Size(250, 150);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer timerAnimation;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

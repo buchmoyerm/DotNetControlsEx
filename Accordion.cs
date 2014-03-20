@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/// Found at http://jfblier.wordpress.com/2011/02/16/window-form-expander/
+using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-/// Found at http://jfblier.wordpress.com/2011/02/16/window-form-expander/
-
-namespace ExpanderApp
+namespace DotNetControlsEx
 {
     public partial class Accordion : Panel
     {

@@ -1,4 +1,4 @@
-namespace OVT.CustomControls
+namespace DotNetControlsEx
 {
     partial class CollapsiblePanel
     {

@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Windows.Forms;
 using System.Xml;
 
 //copied from http://www.codeproject.com/Articles/28717/A-custom-range-selector-control-in-C-with-a-little

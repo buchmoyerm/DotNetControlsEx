@@ -1,19 +1,16 @@
+using DotNetControlsEx.Properties;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using DotNetControlsEx.Properties;
+using System.Windows.Forms;
 
 /// found at http://www.codeproject.com/Articles/53318/C-Custom-Control-Featuring-a-Collapsible-Panel
 
-namespace OVT.CustomControls
+namespace DotNetControlsEx
 {
     [Designer(typeof(CollapsiblePanelDesigner))]
-    [ToolboxBitmap(typeof(CollapsiblePanel), "OVT.CustomControls.CollapsiblePanel.bmp")]
+    [ToolboxBitmap(typeof(CollapsiblePanel), "DotNetControlsEx.CollapsiblePanel.bmp")]
     [DefaultProperty("HeaderText")]
     public partial class CollapsiblePanel : Panel
     {

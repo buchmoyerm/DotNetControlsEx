@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 /// Found at http://jfblier.wordpress.com/2011/02/16/window-form-expander/
 
-namespace ExpanderApp
+namespace DotNetControlsEx
 {
     public partial class Expander : UserControl
     {

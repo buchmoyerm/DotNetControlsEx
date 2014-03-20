@@ -54,14 +54,20 @@
     <Compile Include="AutoDoubleBufferedControl.Designer.cs">
       <DependentUpon>AutoDoubleBufferedControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CollapsiblePanelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CollapsiblePanelEx.Designer.cs">
+      <DependentUpon>CollapsiblePanelEx.cs</DependentUpon>
+    </Compile>
     <Compile Include="CollapsiblePanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CollapsiblePanel.Designer.cs">
       <DependentUpon>CollapsiblePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="CollapsiblePanelActionList.cs" />
-    <Compile Include="CollapsiblePanelDesigner.cs" />
+    <Compile Include="CollapsiblePanelExActionList.cs" />
+    <Compile Include="CollapsiblePanelExDesigner.cs" />
     <Compile Include="CustomRangeSelectorControl\RangeControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,11 +96,12 @@
   <ItemGroup>
     <EmbeddedResource Include="CustomRangeSelectorControl\RangeScale.bmp" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="CollapsiblePanel.bmp" />
     <Content Include="Resources\collapse.gif" />
     <Content Include="Resources\Collapse.png" />
     <Content Include="Resources\collapse_hightlight.gif" />

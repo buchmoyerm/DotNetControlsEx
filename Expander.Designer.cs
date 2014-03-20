@@ -1,4 +1,4 @@
-﻿namespace ExpanderApp
+﻿namespace DotNetControlsEx
 {
     partial class Expander
     {

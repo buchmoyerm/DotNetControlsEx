@@ -2,13 +2,7 @@
 /// From http://www.codeproject.com/Articles/12870/Don-t-Flicker-Double-Buffer
 /// 
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DotNetControlsEx
@@ -30,8 +24,6 @@ namespace DotNetControlsEx
 
         protected override void OnPaint(PaintEventArgs pe)
         {
-            // we draw the progressbar normally with 
-            // the flags sets to our settings
             DoPaint(pe.Graphics);
         }
 
