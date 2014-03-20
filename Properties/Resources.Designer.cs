@@ -93,6 +93,16 @@ namespace DotNetControlsEx.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap CollapseLight {
+            get {
+                object obj = ResourceManager.GetObject("CollapseLight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap expand {
             get {
                 object obj = ResourceManager.GetObject("expand", resourceCulture);
@@ -116,6 +126,16 @@ namespace DotNetControlsEx.Properties {
         public static System.Drawing.Bitmap Expand1 {
             get {
                 object obj = ResourceManager.GetObject("Expand1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ExpandLight {
+            get {
+                object obj = ResourceManager.GetObject("ExpandLight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

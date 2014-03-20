@@ -12,7 +12,7 @@ using DotNetControlsEx.Properties;
 namespace DotNetControlsEx
 {
     [Designer(typeof(CollapsiblePanelExDesigner))]
-    [ToolboxBitmap(typeof(CollapsiblePanel), "CollapsiblePanel.bmp")]
+    [ToolboxBitmap(typeof(CollapsiblePanel), "DotNetControlsEx.CollapsiblePanel.bmp")]
     [DefaultProperty("HeaderText")]
     public partial class CollapsiblePanelEx : Panel
     {
@@ -291,12 +291,13 @@ namespace DotNetControlsEx
         private void SetDefaultExpandCollapseImage()
         {
             defaultHeader.RightImage =
-                        (collapse ? Resources.Expand1 : Resources.Collapse1);
+                        (collapse ? Resources.ExpandLight : Resources.CollapseLight);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            DrawHeaderSeparater(e);
             //DrawHeaderPanel(e);
         }
 
@@ -317,6 +318,23 @@ namespace DotNetControlsEx
                 g.DrawPath(new Pen(ForeColor), gp);
             }
             gp.Dispose();
+        }
+
+        public void DrawHeaderSeparater(PaintEventArgs e)
+        {
+            // Draw header separator
+            if (showHeaderSeparator)
+            {
+                Point start = new Point(Header.Location.X, Header.Location.Y + Header.Height);
+                Point end = new Point(Header.Location.X + Header.Width, Header.Location.Y + Header.Height);
+                e.Graphics.DrawLine(new Pen(ForeColor, 2), start, end);
+                // Draw rectangle lines for the rest of the control.
+                //Rectangle bodyRect = this.ClientRectangle;
+                //bodyRect.Y += this.Header.Height;
+                //bodyRect.Height -= (this.Header.Height + 1);
+                //bodyRect.Width -= 1;
+                //e.Graphics.DrawRectangle(new Pen(ForeColor), bodyRect);
+            }
         }
 
         //private void DrawHeaderPanel(PaintEventArgs e)
@@ -451,14 +469,28 @@ namespace DotNetControlsEx
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            this.header.Width = this.Width - 1;
+            this.Header.Width = this.Width - 1;
+            //edit by bharat start
+            if (collapse)
+            {
+                this.Height = Header.Height + 3;
+                return;
+            }
+            //end
             Refresh();
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            this.header.Width = this.Width - 1;
+            this.Header.Width = this.Width - 1;
+            //edit by bharat start
+            if (collapse)
+            {
+                this.Height = Header.Height + 3;
+                return;
+            }
+            //end
             Refresh();
         }
 
@@ -473,7 +505,7 @@ namespace DotNetControlsEx
                 }
                 else
                 {
-                    int newHight = this.Height - 20;
+                    int newHight = this.Height - 25;
                     if (newHight <= header.Height + 3)
                         newHight = header.Height + 3;
                     this.Height = newHight;
@@ -490,7 +522,7 @@ namespace DotNetControlsEx
                 }
                 else
                 {
-                    int newHeight = this.Height + 20;
+                    int newHeight = this.Height + 25;
                     if (newHeight >= originalHight)
                         newHeight = originalHight;
                     this.Height = newHeight;
@@ -530,8 +562,10 @@ namespace DotNetControlsEx
             this.Controls.Add(_centerJustifiedLabel);
             this.Controls.Add(_rightJustifiedLabel);
 
-            _leftJustifiedLabel.Dock = DockStyle.Left;
-            _rightJustifiedLabel.Dock = DockStyle.Right;
+            PositionLabels();
+
+            _leftJustifiedLabel.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            _rightJustifiedLabel.Anchor = AnchorStyles.Right | AnchorStyles.Top;
         }
 
         public bool TextAutoEllipsis
@@ -540,9 +574,21 @@ namespace DotNetControlsEx
             set { _autoElipses = value; }
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            PositionLabels();
+        }
+
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            PositionLabels();
+        }
+
+        protected override void OnMove(EventArgs e)
+        {
+            base.OnMove(e);
             PositionLabels();
         }
 
@@ -552,7 +598,7 @@ namespace DotNetControlsEx
             set
             {
                 base.Font = value;
-                base.Height = value.Height + 2; //update the height based on the font value
+                base.Height = value.Height + 10; //update the height based on the font value
             }
         }
 
@@ -569,14 +615,51 @@ namespace DotNetControlsEx
 
         private void PositionLabels()
         {
+            //set left ctrl on the left
+            var lRect = _leftJustifiedLabel.ClientRectangle;
+            lRect.Offset(0 - lRect.Left, 0);
+            VCenterRect(ref lRect);
+            _leftJustifiedLabel.SetBounds(lRect.Left, lRect.Top, lRect.Width, lRect.Height);
+
+            //set right ctrol on the right
+            var rRect = _rightJustifiedLabel.ClientRectangle;
+            rRect.Offset( (Width - rRect.Width) - rRect.Left, 0);
+            VCenterRect(ref rRect);
+            _rightJustifiedLabel.SetBounds(rRect.Left, rRect.Top, rRect.Width, rRect.Height);
+
             if (! string.IsNullOrEmpty(_centerJustifiedLabel.Text))
             {
-                int centerLabelWidth = _centerJustifiedLabel.Width;
-                int leftPos = (Width/2) - (centerLabelWidth/2);
-                var lblRect = _centerJustifiedLabel.ClientRectangle;
-                lblRect.Offset(leftPos - lblRect.Left, 0);
-                _centerJustifiedLabel.SetBounds(lblRect.Left, lblRect.Top, lblRect.Width, lblRect.Height);
+                var cRect = _centerJustifiedLabel.ClientRectangle;
+                HCenterRect(ref cRect);
+                VCenterRect(ref cRect);
+                _centerJustifiedLabel.SetBounds(cRect.Left, cRect.Top, cRect.Width, cRect.Height);
             }
+        }
+
+        private void VCenterCtrl(Control ctrl)
+        {
+            var ctrlRect = ctrl.ClientRectangle;
+            VCenterRect(ref ctrlRect);
+            ctrl.SetBounds(ctrlRect.Left, ctrlRect.Top, ctrlRect.Width, ctrlRect.Height);
+        }
+
+        private void HCenterCtrl(Control ctrl)
+        {
+            var ctrlRect = ctrl.ClientRectangle;
+            HCenterRect(ref ctrlRect);
+            ctrl.SetBounds(ctrlRect.Left, ctrlRect.Top, ctrlRect.Width, ctrlRect.Height);
+        }
+
+        private void VCenterRect(ref Rectangle rect)
+        {
+            int topPos = (Height / 2) - (rect.Height / 2);
+            rect.Offset(0, topPos - rect.Top);
+        }
+
+        private void HCenterRect(ref Rectangle rect)
+        {
+            int leftPos = (Width / 2) - (rect.Width / 2);
+            rect.Offset(leftPos - rect.Left, 0);
         }
 
         public Color TextColor
@@ -641,6 +724,7 @@ namespace DotNetControlsEx
                 lbl.AutoSize = false;
                 lbl.Width = autoWidth + gap + lbl.Image.Width;
             }
+            PositionLabels();
         }
     }
 }

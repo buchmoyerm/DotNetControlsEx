@@ -104,9 +104,11 @@
     <Resource Include="CollapsiblePanel.bmp" />
     <Content Include="Resources\collapse.gif" />
     <Content Include="Resources\Collapse.png" />
+    <Content Include="Resources\CollapseLight.png" />
     <Content Include="Resources\collapse_hightlight.gif" />
     <Content Include="Resources\expand.gif" />
     <Content Include="Resources\Expand.png" />
+    <Content Include="Resources\ExpandLight.png" />
     <Content Include="Resources\expand_highlight.gif" />
   </ItemGroup>
   <ItemGroup>
