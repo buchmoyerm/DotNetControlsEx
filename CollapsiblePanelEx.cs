@@ -566,12 +566,6 @@ namespace DotNetControlsEx
             PositionLabels();
         }
 
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-            PositionLabels();
-        }
-
         protected override void OnMove(EventArgs e)
         {
             base.OnMove(e);
