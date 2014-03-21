@@ -282,10 +282,10 @@ namespace DotNetControlsEx
         public CollapsiblePanelEx()
         {
             defaultHeader = new CollapsiblePanelHeader();
-            SetDefaultExpandCollapseImage();
             this.StateChanged += (sender, args) => SetDefaultExpandCollapseImage();
             Header = defaultHeader;
             InitializeComponent();
+            SetDefaultExpandCollapseImage();
         }
 
         private void SetDefaultExpandCollapseImage()
@@ -470,13 +470,6 @@ namespace DotNetControlsEx
         {
             base.OnResize(e);
             this.Header.Width = this.Width - 1;
-            //edit by bharat start
-            if (collapse)
-            {
-                this.Height = Header.Height + 3;
-                return;
-            }
-            //end
             Refresh();
         }
 
@@ -484,13 +477,6 @@ namespace DotNetControlsEx
         {
             base.OnSizeChanged(e);
             this.Header.Width = this.Width - 1;
-            //edit by bharat start
-            if (collapse)
-            {
-                this.Height = Header.Height + 3;
-                return;
-            }
-            //end
             Refresh();
         }
 
@@ -564,9 +550,6 @@ namespace DotNetControlsEx
             this.Controls.Add(_rightJustifiedLabel);
 
             PositionLabels();
-
-            _leftJustifiedLabel.Anchor = AnchorStyles.Left | AnchorStyles.Top;
-            _rightJustifiedLabel.Anchor = AnchorStyles.Right | AnchorStyles.Top;
 
             _savedBackColor = BackColor;
         }
