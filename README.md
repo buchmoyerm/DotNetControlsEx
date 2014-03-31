@@ -10,3 +10,7 @@ Controls include:
 - A slider control for selecting a range within a range of values
 - Multiple collapsible panel controls
 - Base controls that can be used to add double buffering to a custom control
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/buchmoyerm/dotnetcontrolsex/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
