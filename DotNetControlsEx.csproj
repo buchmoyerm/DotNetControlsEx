@@ -84,6 +84,20 @@
     <Compile Include="ManualDoubleBufferedControl.Designer.cs">
       <DependentUpon>ManualDoubleBufferedControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="NotifyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotifyWindow2000.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OfficePopup\PopupNotifier.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OfficePopup\PopupNotifierCollection.cs" />
+    <Compile Include="OfficePopup\PopupNotifierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +116,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Grip.png" />
+    <Content Include="Resources\Icon.ico" />
     <Resource Include="CollapsiblePanel.bmp" />
     <Content Include="Resources\collapse.gif" />
     <Content Include="Resources\Collapse.png" />
