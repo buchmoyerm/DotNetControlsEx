@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
-/// found at http://www.codeproject.com/Articles/53318/C-Custom-Control-Featuring-a-Collapsible-Panel
+// found at http://www.codeproject.com/Articles/53318/C-Custom-Control-Featuring-a-Collapsible-Panel
 
 namespace DotNetControlsEx
 {
