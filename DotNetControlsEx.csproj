@@ -54,6 +54,12 @@
     <Compile Include="AutoDoubleBufferedControl.Designer.cs">
       <DependentUpon>AutoDoubleBufferedControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ButtonOption.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonOption.Designer.cs">
+      <DependentUpon>ButtonOption.cs</DependentUpon>
+    </Compile>
     <Compile Include="CollapsiblePanelEx.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -1,6 +1,6 @@
 ﻿namespace DotNetControlsEx
 {
-    partial class ManualDoubleBufferedControl
+    partial class ButtonOption
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.Resize += DoubleBufferedControl_Resize;
         }
 
         #endregion

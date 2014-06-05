@@ -7,23 +7,23 @@ using System.Xml;
 
 namespace CustomRangeSelectorControl
 {
-    /// <summary>
-    /// This is the notification EventArgs for updates to the current range
-    /// </summary>
-    /// 
+	/// <summary>
+	/// This is the notification EventArgs for updates to the current range
+	/// </summary>
+	/// 
 
-    public class RangeUpdateEventArgs : EventArgs
-    {
-        public RangeUpdateEventArgs(string minRange, string maxRange)
-        {
-            MinRangeSelected = minRange;
-            MaxRangeSelected = maxRange;
-        }
+	public class RangeUpdateEventArgs : EventArgs
+	{
+		public RangeUpdateEventArgs(string minRange, string maxRange)
+		{
+			MinRangeSelected = minRange;
+			MaxRangeSelected = maxRange;
+		}
 
-        public string MinRangeSelected {get; private set;}
-        public string MaxRangeSelected { get; private set; }
-    }
-    
+		public string MinRangeSelected {get; private set;}
+		public string MaxRangeSelected { get; private set; }
+	}
+	
 	/// <summary>
 	/// This is a custom control that allows the user of the control  to select a range of values 
 	/// using two "thumbs".  The control allows the client to change the appearance of the control. 
@@ -47,9 +47,9 @@ namespace CustomRangeSelectorControl
 		private string							strXMLFileName;					// XML File Name that is used for picking up the Label Values
 		private string							strRangeString;					// The String that is displayed at the bottom of the control.  
 		private string							strRange;						// An alternate to the XML File Name where the Range Label values are stored
-        private int                             intRangeMax;                    // Max range value
-        private int                             intRangeMin;                    // Min range value
-        private double                          doubleRangeStep;                   // Range step unit
+		private int                             intRangeMax;                    // Max range value
+		private int                             intRangeMin;                    // Min range value
+		private double                          doubleRangeStep;                   // Range step unit
 		private Font							fntLabelFont;					// Font of the Label
 		private FontStyle						fntLabelFontStyle;				// Font Style of the Label 
 		private float							fLabelFontSize;					// Size of the Label 
@@ -67,18 +67,18 @@ namespace CustomRangeSelectorControl
 		private uint							unGapFromLeftMargin;			// Gap from the Left Margin to draw the Bar
 		private uint							unGapFromRightMargin;			// Gap from the Right Margin to draw the Bar
 		private string							strDelimiter;					// Delimiter used to seperate the Labels in strRange variable
-        private int                             intRangeMinSelected;            // integer position of thumb1
-        private int                             intRangeMaxSelected;            // integer position of thumb2
+		private int                             intRangeMinSelected;            // integer position of thumb1
+		private int                             intRangeMaxSelected;            // integer position of thumb2
 		//private string							strRange1;						// Thumb 1 Position bar
 		//private string							strRange2;						// Thumb 2 Position in the bar
-        private string                          strRange1Temp;
-        private string                          strRange2Temp;
+		private string                          strRange1Temp;
+		private string                          strRange2Temp;
 		private Font							fntRangeOutputStringFont;		// Range Output string font
 		private float							fStringOutputFontSize;			// String Output Font Size
 		private Color							clrStringOutputFontColor;		// Color of the Output Font 
 		private FontFamily						fntStringOutputFontFamily;		// Font Family to display the Range string
-        private bool                            bShowStepLabels;                // indicates whether or not to show the step label
-        private bool                            bUseCustomLabels;               // indicates if control should use custom or automatic labels
+		private bool                            bShowStepLabels;                // indicates whether or not to show the step label
+		private bool                            bUseCustomLabels;               // indicates if control should use custom or automatic labels
 
 		/// <ControlVariables>
 		/// The Above are Design time Control Variables.  These variables can be used by the client
@@ -117,7 +117,7 @@ namespace CustomRangeSelectorControl
 			{
 				try
 				{
-                       strXMLFileName = value;
+					   strXMLFileName = value;
 					
 					if (null != strXMLFileName)
 					{
@@ -138,17 +138,17 @@ namespace CustomRangeSelectorControl
 						CalculateValues();
 						this.Refresh();
 						//OnPaint(ePaintArgs);
-                        WindUpdated();
+						WindUpdated();
 					}
 				}
 				catch
 				{
 					strXMLFileName = null;
-                    //strRange = "";
+					//strRange = "";
 					//CalculateValues();
 					//this.Refresh();
 					//OnPaint(ePaintArgs);
-                    WindUpdated();
+					WindUpdated();
 
 					System.Windows.Forms.MessageBox.Show("The XML Path entered may be invalid (or) The XML file is not well formed", "Error!");
 				}
@@ -176,7 +176,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -195,20 +195,20 @@ namespace CustomRangeSelectorControl
 		{ 
 			set
 			{
-                if (!string.IsNullOrEmpty(value))
-                {
-                    // Splitting the Range Value to display in the control
-                    //strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
-                    //nNumberOfLabels = strSplitLabels.Length;
-                    strRange = value;
-                    Range1 = strRange1Temp;
-                    Range2 = strRange2Temp;
+				if (!string.IsNullOrEmpty(value))
+				{
+					// Splitting the Range Value to display in the control
+					//strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
+					//nNumberOfLabels = strSplitLabels.Length;
+					strRange = value;
+					Range1 = strRange1Temp;
+					Range2 = strRange2Temp;
 
-                    CalculateValues();
-                    this.Refresh();
-                    //OnPaint(ePaintArgs);
-                    WindUpdated();
-                }
+					CalculateValues();
+					this.Refresh();
+					//OnPaint(ePaintArgs);
+					WindUpdated();
+				}
 			}
 
 			get
@@ -217,103 +217,103 @@ namespace CustomRangeSelectorControl
 			}
 		}
 
-        /// <RangeMax>
-        /// Range Max is the maximum value of the slider
-        /// RangeValues in the range can be automatic or user defined
-        /// </RangeMax>
-        public int RangeMax
-        {
-            set
-            {
-                intRangeMax = value;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-            get
-            {
-                return intRangeMax;
-            }
-        }
+		/// <RangeMax>
+		/// Range Max is the maximum value of the slider
+		/// RangeValues in the range can be automatic or user defined
+		/// </RangeMax>
+		public int RangeMax
+		{
+			set
+			{
+				intRangeMax = value;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+			get
+			{
+				return intRangeMax;
+			}
+		}
 
-        /// <RangeMin>
-        /// Range Max is the minimum value of the slider
-        /// RangeValues in the range can be automatic or user defined
-        /// </RangeMin>
-        public int RangeMin
-        {
-            set
-            {
-                intRangeMin = value;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-            get
-            {
-                return intRangeMin;
-            }
-        }
+		/// <RangeMin>
+		/// Range Max is the minimum value of the slider
+		/// RangeValues in the range can be automatic or user defined
+		/// </RangeMin>
+		public int RangeMin
+		{
+			set
+			{
+				intRangeMin = value;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+			get
+			{
+				return intRangeMin;
+			}
+		}
 
-        /// <RangeStep>
-        /// Range Step defines the automatic values between RangeMin and RangeMax
-        /// </RangeStep>
-        public double RangeStep
-        {
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("RangeStep must be greater than zero", "RangeStep");
-                    return;
-                }
+		/// <RangeStep>
+		/// Range Step defines the automatic values between RangeMin and RangeMax
+		/// </RangeStep>
+		public double RangeStep
+		{
+			set
+			{
+				if (value <= 0)
+				{
+					throw new ArgumentException("RangeStep must be greater than zero", "RangeStep");
+					return;
+				}
 
-                doubleRangeStep = value;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-            get
-            {
-                return doubleRangeStep;
-            }
-        }
+				doubleRangeStep = value;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+			get
+			{
+				return doubleRangeStep;
+			}
+		}
 
-        /// <UseCustomLabels>
-        /// Indicate whether or not to use custom labels
-        /// </UseCustomLabels>
-        public bool UseCustomLabels
-        {
-            set
-            {
-                bUseCustomLabels = value;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-            get
-            {
-                return bUseCustomLabels;
-            }
-        }
+		/// <UseCustomLabels>
+		/// Indicate whether or not to use custom labels
+		/// </UseCustomLabels>
+		public bool UseCustomLabels
+		{
+			set
+			{
+				bUseCustomLabels = value;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+			get
+			{
+				return bUseCustomLabels;
+			}
+		}
 
-        /// <ShowStepLabels>
-        /// Indicates whether or not the step labels are displayed
-        /// </ShowStepLabels>
-        public bool ShowStepLabels
-        {
-            set
-            {
-                bShowStepLabels = value;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-            get
-            {
-                return bShowStepLabels;
-            }
-        }
+		/// <ShowStepLabels>
+		/// Indicates whether or not the step labels are displayed
+		/// </ShowStepLabels>
+		public bool ShowStepLabels
+		{
+			set
+			{
+				bShowStepLabels = value;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+			get
+			{
+				return bShowStepLabels;
+			}
+		}
 
 
 		/// <LabelFont>
@@ -329,7 +329,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 			
 			get
@@ -354,7 +354,7 @@ namespace CustomRangeSelectorControl
 					CalculateValues();
 					this.Refresh();
 					//OnPaint(ePaintArgs);
-                    WindUpdated();
+					WindUpdated();
 				}
 				catch
 				{
@@ -384,7 +384,7 @@ namespace CustomRangeSelectorControl
 					CalculateValues();
 					this.Refresh();
 					//OnPaint(ePaintArgs);
-                    WindUpdated();
+					WindUpdated();
 				}
 				catch
 				{
@@ -415,7 +415,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -439,7 +439,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -464,7 +464,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -488,7 +488,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -512,7 +512,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -537,7 +537,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -560,7 +560,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -583,7 +583,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -606,7 +606,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -629,7 +629,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -661,7 +661,7 @@ namespace CustomRangeSelectorControl
 					CalculateValues();
 					this.Refresh();
 					//OnPaint(ePaintArgs);
-                    WindUpdated();
+					WindUpdated();
 				}
 				catch
 				{
@@ -685,12 +685,12 @@ namespace CustomRangeSelectorControl
 		{
 			set
 			{
-                if (value == null) return;
-                if (strRange1Temp == null || ! strRange1Temp.Equals(value))
-                {
-                    strRange1Temp = value;
-                    SetMinSelected(strRange1Temp);
-                }
+				if (value == null) return;
+				if (strRange1Temp == null || ! strRange1Temp.Equals(value))
+				{
+					strRange1Temp = value;
+					SetMinSelected(strRange1Temp);
+				}
 			}
 
 			get
@@ -699,29 +699,29 @@ namespace CustomRangeSelectorControl
 			}
 		}
 
-        private void SetMinSelected(string val)
-        {
-            var sel = Array.FindIndex(strSplitLabels, s => s == val);
-            if (sel > -1 && sel != intRangeMinSelected)
-            {
-                intRangeMinSelected = sel;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-        }
+		private void SetMinSelected(string val)
+		{
+			var sel = Array.FindIndex(strSplitLabels, s => s == val);
+			if (sel > -1 && sel != intRangeMinSelected)
+			{
+				intRangeMinSelected = sel;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+		}
 
-        private void SetMaxSelected(string val)
-        {
-            var sel = Array.FindIndex(strSplitLabels, s => s == val);
-            if (sel > -1 && sel != intRangeMaxSelected)
-            {
-                intRangeMaxSelected = sel;
-                CalculateValues();
-                this.Refresh();
-                WindUpdated();
-            }
-        }
+		private void SetMaxSelected(string val)
+		{
+			var sel = Array.FindIndex(strSplitLabels, s => s == val);
+			if (sel > -1 && sel != intRangeMaxSelected)
+			{
+				intRangeMaxSelected = sel;
+				CalculateValues();
+				this.Refresh();
+				WindUpdated();
+			}
+		}
 
 		/// <Range2>
 		/// The user can specify the Range2 Value. The Setter and getter methods are as below
@@ -732,13 +732,13 @@ namespace CustomRangeSelectorControl
 		{
 			set
 			{
-                if (value == null) return;
-                if (strRange2Temp == null || ! strRange2Temp.Equals(value))
-                {
-                    strRange2Temp = value;
-                    SetMaxSelected(strRange2Temp);
-                }
-            }
+				if (value == null) return;
+				if (strRange2Temp == null || ! strRange2Temp.Equals(value))
+				{
+					strRange2Temp = value;
+					SetMaxSelected(strRange2Temp);
+				}
+			}
 
 			get
 			{
@@ -758,7 +758,7 @@ namespace CustomRangeSelectorControl
 				CalculateValues();
 				this.Refresh();
 				//OnPaint(ePaintArgs);
-                WindUpdated();
+				WindUpdated();
 			}
 
 			get
@@ -774,13 +774,13 @@ namespace CustomRangeSelectorControl
 		/// 
 		#endregion
 
-        #region Control Events
+		#region Control Events
 
-        public event EventHandler<RangeUpdateEventArgs> RangeUpdate;
+		public event EventHandler<RangeUpdateEventArgs> RangeUpdate;
 
-        #endregion Control Events
+		#endregion Control Events
 
-        /// <ProgramVariables>
+		/// <ProgramVariables>
 		/// The Below are Variables used for computation.  
 		/// </ProgramVariables>
 		/// 
@@ -808,9 +808,9 @@ namespace CustomRangeSelectorControl
 		private PointF[]						ptThumbPoints2;				// To Store Thumb2 Point
 		private XmlTextReader					xmlTextReader;				// XML Reader Class
 
-        private bool                            bAnimateTheSlider;          // Animate the Control
-        private float                           fThumbPoint1Prev;			// To Store Thumb Point1
-        private float                           fThumbPoint2Prev;			// To Store Thumb2 Point
+		private bool                            bAnimateTheSlider;          // Animate the Control
+		private float                           fThumbPoint1Prev;			// To Store Thumb Point1
+		private float                           fThumbPoint2Prev;			// To Store Thumb2 Point
 
 
 		#endregion
@@ -863,11 +863,11 @@ namespace CustomRangeSelectorControl
 			fntStringOutputFontFamily	= System.Drawing.FontFamily.GenericSansSerif;
 			fntRangeOutputStringFont	= new System.Drawing.Font(fntStringOutputFontFamily, fStringOutputFontSize, System.Drawing.FontStyle.Regular);
 
-            bUseCustomLabels            = true;
-            bShowStepLabels             = true;
-            intRangeMax                 = 10;
-            intRangeMin                 = 0;
-            doubleRangeStep             = 1;
+			bUseCustomLabels            = true;
+			bShowStepLabels             = true;
+			intRangeMax                 = 10;
+			intRangeMin                 = 0;
+			doubleRangeStep             = 1;
 
 			unSizeOfMiddleBar			= 3;
 			unGapFromLeftMargin			= 10;
@@ -883,7 +883,7 @@ namespace CustomRangeSelectorControl
 
 			bMouseEventThumb1			= false;
 			bMouseEventThumb2			= false;
-            bAnimateTheSlider           = false;
+			bAnimateTheSlider           = false;
 			#endregion
 
 			/// <VariableInit>
@@ -945,28 +945,28 @@ namespace CustomRangeSelectorControl
 				// Creating the Graphics object
 				System.Drawing.Graphics myGraphics = this.CreateGraphics();
 
-                if (bUseCustomLabels)
-                {
-                    // Split the Labels to be displayed below the Bar
-                    strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
-                    nNumberOfLabels = strSplitLabels.Length;
-                }
-                else
-                {
-                    if (doubleRangeStep <= 0)
-                        throw new ArgumentException("Step size must be positive with UseCustomLabels=false", "doubleRangeStep");
+				if (bUseCustomLabels)
+				{
+					// Split the Labels to be displayed below the Bar
+					strSplitLabels = strRange.Split(strDelimiter.ToCharArray(), 1024);
+					nNumberOfLabels = strSplitLabels.Length;
+				}
+				else
+				{
+					if (doubleRangeStep <= 0)
+						throw new ArgumentException("Step size must be positive with UseCustomLabels=false", "doubleRangeStep");
 
-                    nNumberOfLabels = (int)((intRangeMax - intRangeMin) / doubleRangeStep) + 1;
-                    strSplitLabels = new string[nNumberOfLabels];
-                    //build automatic labels
-                    for (int i = 0; i < nNumberOfLabels; ++i)
-                    {
-                        if ((double)(int)doubleRangeStep == doubleRangeStep)
-                            strSplitLabels[i] = string.Format("{0}", intRangeMin + (int)(i * doubleRangeStep));
-                        else
-                            strSplitLabels[i] = string.Format("{0:0.00}", intRangeMin + (i * doubleRangeStep));
-                    }
-                }
+					nNumberOfLabels = (int)((intRangeMax - intRangeMin) / doubleRangeStep) + 1;
+					strSplitLabels = new string[nNumberOfLabels];
+					//build automatic labels
+					for (int i = 0; i < nNumberOfLabels; ++i)
+					{
+						if ((double)(int)doubleRangeStep == doubleRangeStep)
+							strSplitLabels[i] = string.Format("{0}", intRangeMin + (int)(i * doubleRangeStep));
+						else
+							strSplitLabels[i] = string.Format("{0:0.00}", intRangeMin + (i * doubleRangeStep));
+					}
+				}
 
 				// If there's an image load the Image from the file
 				if (null != strLeftImagePath)
@@ -989,11 +989,11 @@ namespace CustomRangeSelectorControl
 				fTotalWidth					= recRegion.Width - (unGapFromRightMargin + unGapFromLeftMargin);
 				fDividedWidth				= fTotalWidth / (float)(nNumberOfLabels - 1);
 
-                int nRangeIndex1Selected = 0;
-                int nRangeIndex2Selected = nNumberOfLabels  - 1;
+				int nRangeIndex1Selected = 0;
+				int nRangeIndex2Selected = nNumberOfLabels  - 1;
 
-                SetMinSelected(Range1);
-                SetMaxSelected(Range2);
+				SetMinSelected(Range1);
+				SetMaxSelected(Range2);
 
 				// This is used to calculate the Thumb Point from the  Range1, Range2 Value
 				for(int nIndexer = 0;nIndexer < nNumberOfLabels;nIndexer++)
@@ -1001,26 +1001,26 @@ namespace CustomRangeSelectorControl
 					if ( intRangeMinSelected == nIndexer /*strRange1.Equals(strSplitLabels[nIndexer])*/)
 					{
 						fThumb1Point = fLeftCol + fDividedWidth * nIndexer;
-                        nRangeIndex1Selected  = nIndexer;
+						nRangeIndex1Selected  = nIndexer;
 					}
 					if ( intRangeMaxSelected == nIndexer /*strRange2.Equals(strSplitLabels[nIndexer])*/)
 					{
 						fThumb2Point = fLeftCol + fDividedWidth * nIndexer;
-                        nRangeIndex2Selected = nIndexer;
+						nRangeIndex2Selected = nIndexer;
 					}
 				}
 
-                if ( intRangeMinSelected == intRangeMaxSelected /*strRange1 == strRange2*/)
-                {
-                    if (nRangeIndex1Selected != 0)
-                    {
-                        fThumb1Point -= fDividedWidth / 2.0f;
-                    }
-                    if (nRangeIndex2Selected != nNumberOfLabels - 1)
-                    {
-                        fThumb2Point += fDividedWidth / 2.0f;
-                    }
-                }
+				if ( intRangeMinSelected == intRangeMaxSelected /*strRange1 == strRange2*/)
+				{
+					if (nRangeIndex1Selected != 0)
+					{
+						fThumb1Point -= fDividedWidth / 2.0f;
+					}
+					if (nRangeIndex2Selected != nNumberOfLabels - 1)
+					{
+						fThumb2Point += fDividedWidth / 2.0f;
+					}
+				}
 
 				// This is for Calculating the final Thumb points
 				ptThumbPoints1[0].X		=	fThumb1Point;
@@ -1057,99 +1057,99 @@ namespace CustomRangeSelectorControl
 		/// 
 		#region Paint Method Override -- This method draws the control on the screen
 
-        private void OnPaintDrawSliderAndBar(System.Drawing.Graphics myGraphics)
-        {
-            System.Drawing.Brush brSolidBrush;
-            System.Drawing.Pen myPen;
+		private void OnPaintDrawSliderAndBar(System.Drawing.Graphics myGraphics)
+		{
+			System.Drawing.Brush brSolidBrush;
+			System.Drawing.Pen myPen;
 
-            // If Interesting mouse event happened on the Thumb1 Draw Thumb1
-            if (bMouseEventThumb1)
-            {
-                brSolidBrush = new System.Drawing.SolidBrush(this.BackColor);
-                if (null != strLeftImagePath)
-                {
-                    myGraphics.FillRectangle(brSolidBrush, ptThumbPoints1[0].X, ptThumbPoints1[1].Y, fWidthOfThumb, fHeightOfThumb);
-                }
-                else
-                {
-                    myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints1, System.Drawing.Drawing2D.FillMode.Winding, 0f);
-                }
-            }
-            //if interesting mouse event happened on Thumb2 draw thumb2
-            if (bMouseEventThumb2)
-            {
-                brSolidBrush = new System.Drawing.SolidBrush(this.BackColor);
+			// If Interesting mouse event happened on the Thumb1 Draw Thumb1
+			if (bMouseEventThumb1)
+			{
+				brSolidBrush = new System.Drawing.SolidBrush(this.BackColor);
+				if (null != strLeftImagePath)
+				{
+					myGraphics.FillRectangle(brSolidBrush, ptThumbPoints1[0].X, ptThumbPoints1[1].Y, fWidthOfThumb, fHeightOfThumb);
+				}
+				else
+				{
+					myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints1, System.Drawing.Drawing2D.FillMode.Winding, 0f);
+				}
+			}
+			//if interesting mouse event happened on Thumb2 draw thumb2
+			if (bMouseEventThumb2)
+			{
+				brSolidBrush = new System.Drawing.SolidBrush(this.BackColor);
 
-                if (null != strRightImagePath)
-                {
-                    myGraphics.FillRectangle(brSolidBrush, ptThumbPoints2[2].X, ptThumbPoints2[1].Y, fWidthOfThumb, fHeightOfThumb);
-                }
-                else
-                {
-                    myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints2, System.Drawing.Drawing2D.FillMode.Winding, 0f);
-                }
-            }
+				if (null != strRightImagePath)
+				{
+					myGraphics.FillRectangle(brSolidBrush, ptThumbPoints2[2].X, ptThumbPoints2[1].Y, fWidthOfThumb, fHeightOfThumb);
+				}
+				else
+				{
+					myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints2, System.Drawing.Drawing2D.FillMode.Winding, 0f);
+				}
+			}
 
-            // The Below lines are to draw the Thumb and the Lines 
-            // The Infocus and the Disabled colors are drawn properly based
-            // onthe  calculated values
-            brSolidBrush = new System.Drawing.SolidBrush(clrInFocusRangeLabelColor);
-            myPen = new System.Drawing.Pen(clrInFocusRangeLabelColor, unSizeOfMiddleBar);
+			// The Below lines are to draw the Thumb and the Lines 
+			// The Infocus and the Disabled colors are drawn properly based
+			// onthe  calculated values
+			brSolidBrush = new System.Drawing.SolidBrush(clrInFocusRangeLabelColor);
+			myPen = new System.Drawing.Pen(clrInFocusRangeLabelColor, unSizeOfMiddleBar);
 
-            ptThumbPoints1[0].X = fThumb1Point;
-            ptThumbPoints1[1].X = fThumb1Point;
-            ptThumbPoints1[2].X = fThumb1Point + fWidthOfThumb;
+			ptThumbPoints1[0].X = fThumb1Point;
+			ptThumbPoints1[1].X = fThumb1Point;
+			ptThumbPoints1[2].X = fThumb1Point + fWidthOfThumb;
 
-            ptThumbPoints2[0].X = fThumb2Point;
-            ptThumbPoints2[1].X = fThumb2Point;
-            ptThumbPoints2[2].X = fThumb2Point - fWidthOfThumb;
+			ptThumbPoints2[0].X = fThumb2Point;
+			ptThumbPoints2[1].X = fThumb2Point;
+			ptThumbPoints2[2].X = fThumb2Point - fWidthOfThumb;
 
-            myPen = new System.Drawing.Pen(clrDisabledBarColor, unSizeOfMiddleBar);
-            myGraphics.DrawLine(myPen, fLeftCol, ptThumbPoints1[2].Y, fThumb1Point, ptThumbPoints1[2].Y);
+			myPen = new System.Drawing.Pen(clrDisabledBarColor, unSizeOfMiddleBar);
+			myGraphics.DrawLine(myPen, fLeftCol, ptThumbPoints1[2].Y, fThumb1Point, ptThumbPoints1[2].Y);
 
-            myGraphics.DrawLine(myPen, fLeftCol, ptThumbPoints1[2].Y, fLeftCol, ptThumbPoints1[2].Y + fntLabelFont.SizeInPoints);
-            myGraphics.DrawLine(myPen, fRightCol, ptThumbPoints1[2].Y, fRightCol, ptThumbPoints1[2].Y + fntLabelFont.SizeInPoints);
+			myGraphics.DrawLine(myPen, fLeftCol, ptThumbPoints1[2].Y, fLeftCol, ptThumbPoints1[2].Y + fntLabelFont.SizeInPoints);
+			myGraphics.DrawLine(myPen, fRightCol, ptThumbPoints1[2].Y, fRightCol, ptThumbPoints1[2].Y + fntLabelFont.SizeInPoints);
 
-            brSolidBrush = new System.Drawing.SolidBrush(clrStringOutputFontColor);
-            myGraphics.DrawString(strRangeString, fntRangeOutputStringFont, brSolidBrush, fLeftCol, fLeftRow * 2 - fntRangeOutputStringFont.Height);
+			brSolidBrush = new System.Drawing.SolidBrush(clrStringOutputFontColor);
+			myGraphics.DrawString(strRangeString, fntRangeOutputStringFont, brSolidBrush, fLeftCol, fLeftRow * 2 - fntRangeOutputStringFont.Height);
 
-            myPen = new System.Drawing.Pen(clrInFocusBarColor, unSizeOfMiddleBar);
-            myGraphics.DrawLine(myPen, ptThumbPoints1[2].X, ptThumbPoints1[2].Y, fThumb2Point,/* - fWidthOfThumb*/ ptThumbPoints1[2].Y);
+			myPen = new System.Drawing.Pen(clrInFocusBarColor, unSizeOfMiddleBar);
+			myGraphics.DrawLine(myPen, ptThumbPoints1[2].X, ptThumbPoints1[2].Y, fThumb2Point,/* - fWidthOfThumb*/ ptThumbPoints1[2].Y);
 
-            myPen = new System.Drawing.Pen(clrDisabledBarColor, unSizeOfMiddleBar);
-            myGraphics.DrawLine(myPen, fThumb2Point, ptThumbPoints2[2].Y, fRightCol, ptThumbPoints2[2].Y);
+			myPen = new System.Drawing.Pen(clrDisabledBarColor, unSizeOfMiddleBar);
+			myGraphics.DrawLine(myPen, fThumb2Point, ptThumbPoints2[2].Y, fRightCol, ptThumbPoints2[2].Y);
 
-            // If the Thumb is an Image it draws the Image or else it draws the Thumb
-            if (null != strLeftImagePath)
-            {
-                myGraphics.DrawImage(imImageLeft, ptThumbPoints1[0].X, ptThumbPoints1[1].Y, fWidthOfThumb, fHeightOfThumb);
-            }
-            else
-            {
-                brSolidBrush = new System.Drawing.SolidBrush(clrThumbColor);
-                myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints1, System.Drawing.Drawing2D.FillMode.Winding, 0f);
-            }
+			// If the Thumb is an Image it draws the Image or else it draws the Thumb
+			if (null != strLeftImagePath)
+			{
+				myGraphics.DrawImage(imImageLeft, ptThumbPoints1[0].X, ptThumbPoints1[1].Y, fWidthOfThumb, fHeightOfThumb);
+			}
+			else
+			{
+				brSolidBrush = new System.Drawing.SolidBrush(clrThumbColor);
+				myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints1, System.Drawing.Drawing2D.FillMode.Winding, 0f);
+			}
 
-            // If the Thumb is an Image it draws the Image or else it draws the Thumb
-            if (null != strRightImagePath)
-            {
-                myGraphics.DrawImage(imImageRight, ptThumbPoints2[2].X, ptThumbPoints2[1].Y, fWidthOfThumb, fHeightOfThumb);
-            }
-            else
-            {
-                brSolidBrush = new System.Drawing.SolidBrush(clrThumbColor);
-                myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints2, System.Drawing.Drawing2D.FillMode.Winding, 0f);
-            }
+			// If the Thumb is an Image it draws the Image or else it draws the Thumb
+			if (null != strRightImagePath)
+			{
+				myGraphics.DrawImage(imImageRight, ptThumbPoints2[2].X, ptThumbPoints2[1].Y, fWidthOfThumb, fHeightOfThumb);
+			}
+			else
+			{
+				brSolidBrush = new System.Drawing.SolidBrush(clrThumbColor);
+				myGraphics.FillClosedCurve(brSolidBrush, ptThumbPoints2, System.Drawing.Drawing2D.FillMode.Winding, 0f);
+			}
 
-        }
+		}
 
-        public void WindUpdated()
-        {
-            this.Invalidate();
-            this.Update();
-        }
+		public void WindUpdated()
+		{
+			this.Invalidate();
+			this.Update();
+		}
 
-        protected override void DoPaint(Graphics myGraphics)
+		protected override void DoPaint(Graphics myGraphics)
 		{
 			try
 			{
@@ -1168,40 +1168,40 @@ namespace CustomRangeSelectorControl
 				strNewRange1	= null;
 				strNewRange2	= null;
 
-                // This loop is to draw the Labels on the screen.
-                for (int nIndexer = 0; nIndexer < nNumberOfLabels; nIndexer++)
-                {
-                    fDividerCounter = fLeftCol + fDividedWidth * nIndexer;
+				// This loop is to draw the Labels on the screen.
+				for (int nIndexer = 0; nIndexer < nNumberOfLabels; nIndexer++)
+				{
+					fDividerCounter = fLeftCol + fDividedWidth * nIndexer;
 
-                    if (bShowStepLabels)//split by size of labels
-                    {
-                        fIsThumb1Crossed = fDividerCounter + strSplitLabels[nIndexer].Length * fntLabelFont.SizeInPoints / 2;
-                        fIsThumb2Crossed = fDividerCounter - (strSplitLabels[nIndexer].Length - 1) * fntLabelFont.SizeInPoints / 2;
-                    }
-                    else // split by even sizes
-                    {
-                        fIsThumb1Crossed = fDividerCounter + fDividedWidth / 2;
-                        fIsThumb2Crossed = fDividerCounter - fDividedWidth / 2;
-                    }
-                    if (fIsThumb1Crossed >= fThumb1Point && strNewRange1 == null)
-                    {
-                        // If Thumb1 Crossed this Label Make it in Focus color
-                        brSolidBrush = new System.Drawing.SolidBrush(clrInFocusRangeLabelColor);
-                        strNewRange1 = strSplitLabels[nIndexer];
-                    }
-                    if (fIsThumb2Crossed > fThumb2Point)
-                    {
-                        // If Thumb2 crossed this draw the labes following this in disabled color
-                        brSolidBrush = new System.Drawing.SolidBrush(clrDisabledRangeLabelColor);
-                        //strNewRange2	= strSplitLabels[nIndexer];
-                    }
-                    else
-                    {
-                        strNewRange2 = strSplitLabels[nIndexer];
-                    }
+					if (bShowStepLabels)//split by size of labels
+					{
+						fIsThumb1Crossed = fDividerCounter + strSplitLabels[nIndexer].Length * fntLabelFont.SizeInPoints / 2;
+						fIsThumb2Crossed = fDividerCounter - (strSplitLabels[nIndexer].Length - 1) * fntLabelFont.SizeInPoints / 2;
+					}
+					else // split by even sizes
+					{
+						fIsThumb1Crossed = fDividerCounter + fDividedWidth / 2;
+						fIsThumb2Crossed = fDividerCounter - fDividedWidth / 2;
+					}
+					if (fIsThumb1Crossed >= fThumb1Point && strNewRange1 == null)
+					{
+						// If Thumb1 Crossed this Label Make it in Focus color
+						brSolidBrush = new System.Drawing.SolidBrush(clrInFocusRangeLabelColor);
+						strNewRange1 = strSplitLabels[nIndexer];
+					}
+					if (fIsThumb2Crossed > fThumb2Point)
+					{
+						// If Thumb2 crossed this draw the labes following this in disabled color
+						brSolidBrush = new System.Drawing.SolidBrush(clrDisabledRangeLabelColor);
+						//strNewRange2	= strSplitLabels[nIndexer];
+					}
+					else
+					{
+						strNewRange2 = strSplitLabels[nIndexer];
+					}
 
-                    if (bShowStepLabels) myGraphics.DrawString(strSplitLabels[nIndexer], fntLabelFont, brSolidBrush, fDividerCounter - ((fntLabelFont.SizeInPoints) * strSplitLabels[nIndexer].Length) / 2, fLeftRow);
-                }
+					if (bShowStepLabels) myGraphics.DrawString(strSplitLabels[nIndexer], fntLabelFont, brSolidBrush, fDividerCounter - ((fntLabelFont.SizeInPoints) * strSplitLabels[nIndexer].Length) / 2, fLeftRow);
+				}
 
 				// This is to draw exactly the Range String like "Range 10 to 100" 
 				// This will draw the information only if there is a change. 
@@ -1209,67 +1209,67 @@ namespace CustomRangeSelectorControl
 					(!Range1.Equals(strNewRange1) || !Range2.Equals(strNewRange2)) ||
 					(!bMouseEventThumb1 && !bMouseEventThumb2))
 				{
-                    //draw over the old string with the BackColor
+					//draw over the old string with the BackColor
 					brSolidBrush		= new System.Drawing.SolidBrush(this.BackColor);
 					strRangeOutput	= Range1 + " - " + Range2;
 					myGraphics.DrawString(strRangeOutput , fntRangeOutputStringFont, brSolidBrush, fLeftCol + fntRangeOutputStringFont.Size * strRangeString.Length , fLeftRow * 2 - fntRangeOutputStringFont.Height);
 
-                    //draw the new string
+					//draw the new string
 					brSolidBrush		= new System.Drawing.SolidBrush(clrStringOutputFontColor);
 					strRangeOutput	= strNewRange1 + " - " + strNewRange2;
 					myGraphics.DrawString(strRangeOutput , fntRangeOutputStringFont, brSolidBrush, fLeftCol + fntRangeOutputStringFont.Size * strRangeString.Length , fLeftRow * 2 - fntRangeOutputStringFont.Height);
 
-                    Range1 = strNewRange1;
-                    Range2 = strNewRange2;
+					Range1 = strNewRange1;
+					Range2 = strNewRange2;
 				}
 
-                if (bAnimateTheSlider)
-                {
-                    float fTempThumb1Point = fThumb1Point;
-                    float fTempThumb2Point = fThumb2Point;
-                    int nToMakeItTimely = System.Environment.TickCount;
+				if (bAnimateTheSlider)
+				{
+					float fTempThumb1Point = fThumb1Point;
+					float fTempThumb2Point = fThumb2Point;
+					int nToMakeItTimely = System.Environment.TickCount;
 
-                    for (fThumb1Point = fThumbPoint1Prev, fThumb2Point = fThumbPoint2Prev; 
-                        fThumb1Point <= fTempThumb1Point || fThumb2Point >= fTempThumb2Point; 
-                        fThumb1Point += 3.0f, fThumb2Point -= 3.0f)
-                    {
-                        bMouseEventThumb1 = true; 
-                        bMouseEventThumb2 = true;
+					for (fThumb1Point = fThumbPoint1Prev, fThumb2Point = fThumbPoint2Prev; 
+						fThumb1Point <= fTempThumb1Point || fThumb2Point >= fTempThumb2Point; 
+						fThumb1Point += 3.0f, fThumb2Point -= 3.0f)
+					{
+						bMouseEventThumb1 = true; 
+						bMouseEventThumb2 = true;
 
-                        if (fThumb1Point > fTempThumb1Point)
-                        {
-                            fThumb1Point = fTempThumb1Point;
-                        }
+						if (fThumb1Point > fTempThumb1Point)
+						{
+							fThumb1Point = fTempThumb1Point;
+						}
 
-                        if (fThumb2Point < fTempThumb2Point)
-                        {
-                            fThumb2Point = fTempThumb2Point;
-                        }
+						if (fThumb2Point < fTempThumb2Point)
+						{
+							fThumb2Point = fTempThumb2Point;
+						}
 
-                        OnPaintDrawSliderAndBar(myGraphics);
-                        if (System.Environment.TickCount - nToMakeItTimely >= 1000)
-                        {
-                            // Hey its not worth having animation for more than 1 sec.  
-                            break;
-                        }
-                        System.Threading.Thread.Sleep(1);
-                    }
+						OnPaintDrawSliderAndBar(myGraphics);
+						if (System.Environment.TickCount - nToMakeItTimely >= 1000)
+						{
+							// Hey its not worth having animation for more than 1 sec.  
+							break;
+						}
+						System.Threading.Thread.Sleep(1);
+					}
 
-                    fThumb1Point = fTempThumb1Point;
-                    fThumb2Point = fTempThumb2Point;
-                    bMouseEventThumb1 = true;
-                    bMouseEventThumb2 = true;
-                    OnPaintDrawSliderAndBar(myGraphics);
+					fThumb1Point = fTempThumb1Point;
+					fThumb2Point = fTempThumb2Point;
+					bMouseEventThumb1 = true;
+					bMouseEventThumb2 = true;
+					OnPaintDrawSliderAndBar(myGraphics);
 
-                    bAnimateTheSlider = false;
-                    bMouseEventThumb1 = false;
-                    bMouseEventThumb2 = false;
-                    OnPaintDrawSliderAndBar(myGraphics);
-                }
-                else
-                {
-                    OnPaintDrawSliderAndBar(myGraphics);
-                }
+					bAnimateTheSlider = false;
+					bMouseEventThumb1 = false;
+					bMouseEventThumb2 = false;
+					OnPaintDrawSliderAndBar(myGraphics);
+				}
+				else
+				{
+					OnPaintDrawSliderAndBar(myGraphics);
+				}
 
 				// calling the base class.
 				base.DoPaint (myGraphics);
@@ -1321,10 +1321,10 @@ namespace CustomRangeSelectorControl
 		#endregion
 
 
-        //private void RangeSelectorControl_Load(object sender, System.EventArgs e)
-        //{
-        //    CalculateValues();
-        //}
+		//private void RangeSelectorControl_Load(object sender, System.EventArgs e)
+		//{
+		//    CalculateValues();
+		//}
 
 		/// <MouseEvents>
 		/// The below are the methods used for handling Mouse Events
@@ -1337,14 +1337,14 @@ namespace CustomRangeSelectorControl
 			bMouseEventThumb1 = false;
 			bMouseEventThumb2 = false;
 
-            // Storing these values for animating the slider
-            fThumbPoint1Prev = fThumb1Point;
-            fThumbPoint2Prev = fThumb2Point;
+			// Storing these values for animating the slider
+			fThumbPoint1Prev = fThumb1Point;
+			fThumbPoint2Prev = fThumb2Point;
 
-            CalculateValues();
-            bAnimateTheSlider = true;
-            this.Refresh();
-            this.WindUpdated();
+			CalculateValues();
+			bAnimateTheSlider = true;
+			this.Refresh();
+			this.WindUpdated();
 		}
 
 		private void RangeSelectorControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -1361,7 +1361,7 @@ namespace CustomRangeSelectorControl
 			{
 				bMouseEventThumb2 = true;
 			}
-            bAnimateTheSlider = false;
+			bAnimateTheSlider = false;
 		}
 
 		private void RangeSelectorControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -1376,14 +1376,14 @@ namespace CustomRangeSelectorControl
 					{
 						fThumb1Point = e.X;
 						//OnPaint(ePaintArgs);
-                        WindUpdated();
+						WindUpdated();
 					}
 				}
 				else if (fThumb2Point - fWidthOfThumb > e.X)
 				{
 					fThumb1Point = e.X;
 					//OnPaint(ePaintArgs);
-                    WindUpdated();
+					WindUpdated();
 				}
 				else
 				{
@@ -1400,14 +1400,14 @@ namespace CustomRangeSelectorControl
 					{
 						fThumb2Point = e.X;
 						//OnPaint(ePaintArgs);
-                        WindUpdated();
+						WindUpdated();
 					}
 				}
 				else if (fThumb1Point + fWidthOfThumb < e.X)
 				{
 					fThumb2Point = e.X;
 					//OnPaint(ePaintArgs);
-                    WindUpdated();
+					WindUpdated();
 				}
 				else
 				{
@@ -1422,11 +1422,11 @@ namespace CustomRangeSelectorControl
 				objNotifyClient.Range2	= Range2;
 			}
 
-            var temp = RangeUpdate;
-            if (temp != null)
-            {
-                temp(this, new RangeUpdateEventArgs(Range1, Range2));
-            }
+			var temp = RangeUpdate;
+			if (temp != null)
+			{
+				temp(this, new RangeUpdateEventArgs(Range1, Range2));
+			}
 		}
 	
 		/// <MouseEvents>
@@ -1444,7 +1444,7 @@ namespace CustomRangeSelectorControl
 			CalculateValues();
 			this.Refresh();
 			//OnPaint(ePaintArgs);
-            WindUpdated();
+			WindUpdated();
 		}
 	}
 

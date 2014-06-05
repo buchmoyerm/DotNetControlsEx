@@ -48,6 +48,8 @@ namespace DotNetControlsEx
 
             // now we draw the image into the screen
             ManagedBackBuffer.Render(pe.Graphics);
+
+            base.OnPaint(pe);
         }
 
         private void DoubleBufferedControl_Resize(object sender,
@@ -63,7 +65,7 @@ namespace DotNetControlsEx
                 GraphicManager.Allocate(this.CreateGraphics(),
                                                 ClientRectangle);
 
-            this.Refresh();
+            this.Invalidate();
         }
 
         protected virtual void DoPaint(Graphics graphics) { }

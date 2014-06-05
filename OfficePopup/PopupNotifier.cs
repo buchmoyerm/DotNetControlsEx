@@ -329,6 +329,7 @@ namespace DotNetControlsEx.OfficePopup
                     frmPopup.Opacity = opacityStart;
                     frmPopup.Location = new Point(Screen.PrimaryScreen.WorkingArea.Right - frmPopup.Size.Width - 1, posStart);
                     frmPopup.Show();
+                    //NativeMethods.ShowWindow(frmPopup.Handle, (int)NativeMethods.ShowWindowOptions.SW_SHOWNOACTIVATE);
                     isAppearing = true;
 
                     tmrWait.Interval = Delay;
