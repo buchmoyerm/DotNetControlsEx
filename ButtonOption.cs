@@ -18,7 +18,7 @@ namespace DotNetControlsEx
             InitializeComponent();
         }
 
-        public Action<uint> SelectionChanged;
+        public event EventHandler SelectionChanged;
 
         private List<string> _options = new List<string>();
         private List<SelectableButton> _buttons = new List<SelectableButton>(); 
@@ -114,7 +114,7 @@ namespace DotNetControlsEx
                         var t = SelectionChanged;
                         if (t != null)
                         {
-                            t(_selectedOption);
+                            t(this, new SelectionChangedEventArgs(_selectedOption));
                         }
                     }
                 }
@@ -138,6 +138,15 @@ namespace DotNetControlsEx
             base.OnForeColorChanged(e);
             Reset();
         }
+    }
+
+    public class SelectionChangedEventArgs : EventArgs
+    {
+        public SelectionChangedEventArgs(uint curSelection)
+        {
+            CurrentSelection = curSelection;
+        }
+        public uint CurrentSelection { get; internal set; }
     }
 
     public class SelectableButton : AutoDoubleBufferedControl
