@@ -1,28 +1,50 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 
 namespace DotNetControlsEx
 {
-    public class TextBoxEx : TextBox
+    public class PasteEventArgs : EventArgs
     {
-        protected override void OnPaint(PaintEventArgs e)
+        public PasteEventArgs(string pastedText)
         {
-            base.OnPaint(e);
-
-            if ( this.BackColor.GetBrightness() >= 0.5 )
-            {
-                PaintPopoutHandle(Color.Black);
-            }
-            else
-            {
-                PaintPopoutHandle(Color.LightGray);
-            }
+            PastedText = pastedText;
         }
 
-        private void PaintPopoutHandle(Color color)
+        public string PastedText { get; set; }
+    }
+
+    public class TextBoxEx : TextBox
+    {
+        public event EventHandler TextPasted;
+ 
+        protected override void WndProc(ref Message m)
         {
-            var r = ClientRectangle;
+            switch (m.Msg)
+            {
+                // Trap WM_PASTE:
+                case (int) NativeMethods.WindowMessages.WM_PASTE:
+                    if (Clipboard.ContainsText())
+                    {
+                        DoPaste(Clipboard.GetText());
+                        return;
+                    }
+                    break;
+            }
+
+            base.WndProc(ref m);
+        }
+
+        private void DoPaste(string pText)
+        {
+            var args = new PasteEventArgs(pText);
+            var eHandler = TextPasted;
+            if (eHandler != null)
+            {
+                eHandler(this, args);
+            }
+            this.SelectedText = args.PastedText;
         }
     }
 }

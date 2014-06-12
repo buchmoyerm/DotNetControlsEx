@@ -215,6 +215,8 @@ namespace DotNetControlsEx
 			WM_HSCROLL = 0x0114,
 			WM_VSCROLL = 0x0115,
 
+            WM_PASTE = 0x0302,
+
 			WM_PRINT = 0x0317,
 			WM_PRINTCLIENT = 0x0318,
 		}
