@@ -76,11 +76,10 @@ namespace DotNetControlsEx
                         if (args.Cancel)
                             return;
                     }
+                    collapse = value;
+                    CollapseOrExpand();
+                    Refresh();
                 }
-
-                collapse = value;
-                CollapseOrExpand();
-                Refresh();
             }
         }
 
